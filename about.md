@@ -4,8 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+Hi there. On this website, I keep a journal of sorts, talk about projects I am working on or am thinking about, and anything that really tickles my fancy.
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+I'm a new grad from the [University of Waterloo](http://uwaterloo.ca) and have only started working full time very recently. I enjoy developing silly, funky projects for fun and this blog is mainly an excuse for me to practice my communication skills.
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+I'm currently using the default [jekyllrb.com](http://jekyllrb.com/) theme but should be modifying it so that it has its own personality in the near future. This site is hosted via the kind people of [GitHubIO](http://github.io).
