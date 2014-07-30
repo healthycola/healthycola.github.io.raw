@@ -13,12 +13,14 @@ There was a really simple solution to it which would perform the task with O(n<s
 <!--more-->
 
 I wanted to do better than this solution and thought of an onion-method to do it. It would include starting with the outside layer of the matrix, and switching the numbers with their new spots for the four sides. For instance, if the following was the matrix:
-<code>
+
+~~~~
 |  1  |  2  |  3  |  4  |
 |  5  |  6  |  7  |  8  |
 |  9  |  10 |  11 |  12 |
 |  13 |  14 |  15 |  16 |
-</code>
+~~~~~
+
 In the first layer, for the first iteration, 1 would move to 4s position, 4 would move to 16, 16 would move to 13s position, and 13 would move to 1s position. Iterating through all n - 1 numbers of the layer, (i.e. 1 to 3), the outer layer would have been rotated. Moving down inwards in similar fashion will have switched the entire matrix.
 <!--more-->
 
@@ -118,7 +120,8 @@ int main(int argc, char** argv)
 Looking at the code above, the main loop runs for `N/2` times while the inner loop runs for `N - 2*N/2 + 1` times. Total time is then `O(N/2*(N-N+1))` which is `O(N)`. And the space requirement is O(1). I guess mission accomplished! :)
 
 Here is a sample of the output:
-{% highlight %}
+
+~~~~~~~~
 N = 10
 What is the array?:
 1 2 3 4 5 6 7 8 9 0
@@ -186,4 +189,4 @@ y
 rotate? y/n: n
 
 Program exited with code 0.
-{% endhighlight %}
+~~~~~~~~~

@@ -168,11 +168,11 @@ In the first layer, for the first iteration, 1 would move to 4s position, 4 woul
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
-<p>Looking at the code above, the main loop runs for <code>N/2</code> times while the inner loop runs for <code>N - 2*N/2 + 1</code> times. Total time is then O(N/2*(N-N+1)) which is O(N). And the space requirement is O(1). I guess mission accomplished! :)</p>
+<p>Looking at the code above, the main loop runs for <code>N/2</code> times while the inner loop runs for <code>N - 2*N/2 + 1</code> times. Total time is then <code>O(N/2*(N-N+1))</code> which is <code>O(N)</code>. And the space requirement is O(1). I guess mission accomplished! :)</p>
 
-<p>Here is a sample of the output:
-<code>
-N = 10
+<p>Here is a sample of the output:</p>
+
+<pre><code>N = 10
 What is the array?:
 1 2 3 4 5 6 7 8 9 0
 0 9 8 7 6 5 4 3 2 1
@@ -185,9 +185,9 @@ What is the array?:
 9 8 7 6 7 8 9 8 7 6
 0 0 0 0 0 0 0 0 0 0
 rotate? y/n:
-y</code></p>
+y
 
-<p>0 9 2 1 9 0 0 1 0 1
+0 9 2 1 9 0 0 1 0 1
 0 8 2 1 8 1 8 3 9 2
 0 7 2 1 7 2 6 5 8 3
 0 6 2 1 6 3 4 7 7 4
@@ -198,9 +198,9 @@ y</code></p>
 0 7 2 1 9 2 3 8 2 9
 0 6 2 1 0 1 1 0 1 0
 rotate? y/n:
-y</p>
+y
 
-<p>0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
 6 7 8 9 8 7 6 7 8 9
 2 2 2 2 2 2 2 2 2 2
 1 1 1 1 1 1 1 1 1 1
@@ -211,9 +211,9 @@ y</p>
 1 2 3 4 5 6 7 8 9 0
 0 9 8 7 6 5 4 3 2 1
 rotate? y/n:
-y</p>
+y
 
-<p>0 1 0 1 1 0 1 2 6 0
+0 1 0 1 1 0 1 2 6 0
 9 2 8 3 2 9 1 2 7 0
 8 3 6 5 3 8 1 2 8 0
 7 4 4 7 4 7 1 2 9 0
@@ -224,9 +224,9 @@ y</p>
 2 9 3 8 1 8 1 2 8 0
 1 0 1 0 0 9 1 2 9 0
 rotate? y/n:
-y</p>
+y
 
-<p>1 2 3 4 5 6 7 8 9 0
+1 2 3 4 5 6 7 8 9 0
 0 9 8 7 6 5 4 3 2 1
 1 3 5 7 9 2 4 6 8 0
 0 8 6 4 2 9 7 5 3 1
@@ -236,10 +236,10 @@ y</p>
 2 2 2 2 2 2 2 2 2 2
 9 8 7 6 7 8 9 8 7 6
 0 0 0 0 0 0 0 0 0 0
-rotate? y/n: n</p>
+rotate? y/n: n
 
-<p>Program exited with code 0.
-&lt;/code&gt;</p>
+Program exited with code 0.
+</code></pre>
 
   </article>
   <div id="disqus_thread"></div>

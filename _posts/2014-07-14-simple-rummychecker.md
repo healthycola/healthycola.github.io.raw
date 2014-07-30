@@ -354,6 +354,8 @@ Simply go through the hand and count the number of cards with the same value as 
 
 <em>Run Checker:
 </em>This code is significantly more messy. Let's see. Go through each card in the (sorted) hand until you get to the same suit as the new card. (Aside: the sort method that I've implemented, sorts the hands in terms of values grouped with their individual suits). Then, depending on if we're checking for a 3 card or 4 card run, we create a temporary second set called a Run (which is essentially a vector of cards).
+
 We insert the new card in, and then insert the next 2 to 3 cards in depending on the length of the run we're interested in. When we're doing this, and we encounter a card with a different suit than our new card, we know that a run isn't possible since we've hit a new suit in a sorted hand, so break out of the function. If we are successful in adding the right number of cards, we sort this mini hand. Then we subtract the largest value from the smallest value, and the result should be the length of the run we are interested in minus 1. So for instance, if we are interested in a run of 4 cards, and we have 3, 4, 5, 6 of the same suit, then 6 - 3 would give us 3. Now if this is the case, then we have successfully found a run!
+
 To find a card we can remove from the hand, I use the brute force method. Which means going through the hand once again and as soon as I hit a card which is not in the mini-hand, I can discard that card.
 <em>Clearly this method can be improved upon....</em>
