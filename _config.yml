@@ -6,8 +6,8 @@ baseurl: ""
 url: "http://yourdomain.com"
 twitter_username: healthycola
 github_username:  healthycola
-
+excerpt_separator: <!--more-->
+comments: true
 # Build settings
 markdown: kramdown
 permalink: pretty
-excerpt_separator: <!--more-->
