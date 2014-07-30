@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Code, Bagels and Gibberish</title>
+    <title>Huffman Encoding Implementation</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!">
-    <link rel="canonical" href="http://yourdomain.com/">
+    <link rel="canonical" href="http://yourdomain.com/c++/2014/07/24/huffman-encoding-implementation/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -53,42 +53,32 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
+      <div class="post">
 
-  <h1>Posts</h1>
+  <header class="post-header">
+    <h1>Huffman Encoding Implementation</h1>
+    <p class="meta">Jul 24, 2014</p>
+  </header>
 
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Jul 30, 2014</span>
-        <a class="post-link" href="/jekyll/update/2014/07/30/welcome-to-jekyll/">Welcome to Jekyll!</a><br>
-        You’ll find this post in your <code>_posts</code> directory - edit this post and re-build (or run with the <code>-w</code> switch) to see your changes!
-To add new posts, simply add a file in the <code>_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 24, 2014</span>
-        <a class="post-link" href="/c++/2014/07/24/huffman-encoding-implementation/">Huffman Encoding Implementation</a><br>
-        There was a fun little challenge on Reddit that I decided to partake in. I’m going to copy the challenge from <a href="http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/&quot; target=&quot;_blank&quot;">there</a> for completion.
+  <article class="post-content">
+  <p>There was a fun little challenge on Reddit that I decided to partake in. I’m going to copy the challenge from <a href="http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/&quot; target=&quot;_blank&quot;">there</a> for completion.</p>
 
 <blockquote>
-  It is 2114. We have colonized the Galaxy. To communicate we send 140 character max messages using [A-Z0-9 ]. The technology to do this requires faster than light pulses to beam the messages to relay stations.
+  <p>It is 2114. We have colonized the Galaxy. To communicate we send 140 character max messages using [A-Z0-9 ]. The technology to do this requires faster than light pulses to beam the messages to relay stations.
 Your challenge is to implement the compression for these messages. The design is very open and the solutions will vary.
 Your goals:
 &gt; Compact 140 Bytes down to a stream of bits to send and then decompact the message and verify 100% data contained.
-&gt; The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.
+&gt; The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.</p>
 </blockquote>
 
-I decided to take this as an excuse to implement the <a href="http://en.wikipedia.org/wiki/Huffman_coding" target="_blank">Huffman Encoding</a> technique that we learned about in school. 
+<p>I decided to take this as an excuse to implement the <a href="http://en.wikipedia.org/wiki/Huffman_coding" target="_blank">Huffman Encoding</a> technique that we learned about in school. </p>
 
-This was the first time I had a chance to work with the map data structure in C++, so that was fun. Essentially, what I did was supply the program with a sample text from which it could extract frequency data of each of the characters. I realized after that I could have just wiki’d this, since frequency data for letters is <a href="http://en.wikipedia.org/wiki/Letter_frequency" target="_blank">available</a> online. Ah well…
-<!--more-->
+<p>This was the first time I had a chance to work with the map data structure in C++, so that was fun. Essentially, what I did was supply the program with a sample text from which it could extract frequency data of each of the characters. I realized after that I could have just wiki’d this, since frequency data for letters is <a href="http://en.wikipedia.org/wiki/Letter_frequency" target="_blank">available</a> online. Ah well…
+<!--more--></p>
 
-Once I generated the frequency list, I went ahead and created the tree using nodes. Each node contain a few things - frequency of that particular character (or parent), the value of the character if it was a leaf node, and the pointers to the left and right nodes (null upon initialization, and it remains null if they are leaf nodes).
+<p>Once I generated the frequency list, I went ahead and created the tree using nodes. Each node contain a few things - frequency of that particular character (or parent), the value of the character if it was a leaf node, and the pointers to the left and right nodes (null upon initialization, and it remains null if they are leaf nodes).</p>
 
-[code language=”cpp”]
+<p>[code language=”cpp”]
 void generateTree()
     {
         vector&lt;HuffEncNode<em>&gt; TreeNodes;
@@ -104,7 +94,7 @@ void generateTree()
             HuffEncNode* RightNode = TreeNodes.back();
             TreeNodes.pop_back();
             HuffEncNode* LeftNode = TreeNodes.back();
-            TreeNodes.pop_back();
+            TreeNodes.pop_back();</p>
 
 <pre><code>        HuffEncNode* parentNode = new HuffEncNode(RightNode-&amp;gt;frequency + LeftNode-&amp;gt;frequency, LeftNode, RightNode);
         TreeNodes.push_back(parentNode);
@@ -118,18 +108,18 @@ void generateTree()
 } [/code]
 </code></pre>
 
-The algorithm itself is described on the wikipedia page for Huffman encoding. The last bit of the code which says Generate the encoding map, essentially traverses down the tree and saves the codes for each character in a map for easier access during the encoding process. 
+<p>The algorithm itself is described on the wikipedia page for Huffman encoding. The last bit of the code which says Generate the encoding map, essentially traverses down the tree and saves the codes for each character in a map for easier access during the encoding process. </p>
 
-During the decoding process, the program would simply traverse down the tree based on the bit (1 or 0) until it hit a character. That’s the beauty of Huffman Encoding.
+<p>During the decoding process, the program would simply traverse down the tree based on the bit (1 or 0) until it hit a character. That’s the beauty of Huffman Encoding.</p>
 
-[code language=”cpp”]
+<p>[code language=”cpp”]
 char deCode(string input, int* characterLocation)
         {
             if (leftNode == NULL &amp;&amp; rightNode == NULL)
             {
                 //leaf node
                 return ASCIIVal;
-            }
+            }</p>
 
 <pre><code>        if (input[*characterLocation] == '0')
         {
@@ -146,7 +136,7 @@ char deCode(string input, int* characterLocation)
     } [/code]
 </code></pre>
 
-The sample that the challenge wanted us to use was as follows:
+<p>The sample that the challenge wanted us to use was as follows:</p>
 
 <ol>
 <li>REMEMBER TO DRINK YOUR OVALTINE</li>
@@ -154,7 +144,7 @@ The sample that the challenge wanted us to use was as follows:
 <li>SPACE THE FINAL FRONTIER THESE ARE THE VOYAGES OF THE BIT STREAM DAILY PROGRAMMER TO SEEK OUT NEW COMPRESSION</li>
 </ol>
 
-Using the test set above to train the Huffman encoding would defeat the purpose of the challenge, but I figured it would be a good benchmark to use. So developing the encoding tree with the test set above resulted in this:
+<p>Using the test set above to train the Huffman encoding would defeat the purpose of the challenge, but I figured it would be a good benchmark to use. So developing the encoding tree with the test set above resulted in this:</p>
 
 <pre>
 <em><strong>The coding is as follows:</strong></em>
@@ -217,7 +207,7 @@ Message Matches!
 Program ended with exit code: 0
 </pre>
 
-Training the Huffman Tree with an ebook I found on <a href="http://gutenberg.org" target="_blank">Project Gutenberg</a> worked fairly well for me. Here are the results:
+<p>Training the Huffman Tree with an ebook I found on <a href="http://gutenberg.org" target="_blank">Project Gutenberg</a> worked fairly well for me. Here are the results:</p>
 
 <pre>
 <em><strong>The coding is as follows:</strong></em>
@@ -279,86 +269,14 @@ Decompressing Message into 109 Bytes.
 Message Matches!
 </pre>
 
-Not bad! The bench mark gives 46%, 45% and 48.5%. On the other side, I get compression rates of 45.6%, 40.33% and 48.5%. Not bad! Seems like the main issue with the ebook text I used was with the numbers. 
+<p>Not bad! The bench mark gives 46%, 45% and 48.5%. On the other side, I get compression rates of 45.6%, 40.33% and 48.5%. Not bad! Seems like the main issue with the ebook text I used was with the numbers. </p>
 
-Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project files up. <del datetime="2014-07-24T21:09:48+00:00">I’ll do that later</del>. <ins datetime="2014-07-24T21:09:48+00:00"><a href="https://github.com/healthycola/HuffmanEncode" target="_blank">They’re up now</a>.</ins>
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 22, 2014</span>
-        <a class="post-link" href="/fitness/powerlifting/weightlifting/2014/07/22/squatting/">Squatting!</a><br>
-        I've been doing the <a href="http://stronglifts.com/5x5/" target="_blank">SL 5x5</a> for a few weeks now and I'm really enjoying it (especially since it's Ramadan right now). 
+<p>Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project files up. <del datetime="2014-07-24T21:09:48+00:00">I’ll do that later</del>. <ins datetime="2014-07-24T21:09:48+00:00"><a href="https://github.com/healthycola/HuffmanEncode" target="_blank">They’re up now</a>.</ins></p>
 
 
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 22, 2014</span>
-        <a class="post-link" href="/c++/trie/2014/07/22/autocomplete-word-predictor-simple-trie/">Autocomplete / Word Predictor / Simple Trie</a><br>
-        Decided to code up a Simple Trie for kicks. The code is still in the works, but can be accessed on git <a href="https://github.com/healthycola/SimpleWordPredictor/" target="_blank">here</a>.
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 16, 2014</span>
-        <a class="post-link" href="/c++/2014/07/16/2d-matrix-rotator/">2D Matrix Rotator</a><br>
-        Simple challenge was <a href="http://www.reddit.com/r/dailyprogrammer/comments/29i9jw/6302014_challenge_169_easy_90_degree_2d_array/">posted</a> up on reddit.
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 14, 2014</span>
-        <a class="post-link" href="/c++/2014/07/14/simple-rummychecker/">Simple RummyChecker</a><br>
-        This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 12, 2014</span>
-        <a class="post-link" href="/c++/2014/07/12/11/">Simple BlackJackChecker</a><br>
-        Wanted to add something very quick before heading to bed. I'm going to edit this post when I wake up. Here's my first take on <a href="http://www.reddit.com/r/dailyprogrammer/comments/29zut0/772014_challenge_170_easy_blackjack_checker/" title="Reddit's simple blackjack checker">Reddit's simple blackjack checker</a>. Seems to work, and I think it's fairly elegant, tbh, but I'll have a better look when it's not 6 in the morning :).
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 11, 2014</span>
-        <a class="post-link" href="/c++/2014/07/11/vector-vs-arrays/">Vector vs. Arrays</a><br>
-        There aren't a whole lot of differences between Vectors and Arrays internally (i.e. in terms of performance). Vectors use an array structure internally but have additional functions to manage it. Some advantages of a vector are as follows:
-<ul>
-<li>You can dynamically allocate vectors without knowing the exact size at the time of conception. This means that handling vectors will be safer in the long run. You need not be extra careful to exceed the boundaries of a vector. Vectors require more space however. If you want to add to a vector, and the vector is at capacity, it will double its capacity and copy all the contents. This will increase memory usage but improve flexibility</li>
-<li>Vectors have additional functionality such as <code>size</code> and <code>capacity</code> which are very useful.</li>
-<li>Here is a great <a href="http://stackoverflow.com/questions/6462985/c-stl-vector-vs-array-in-the-real-world">response</a> I found on StackOverflow to this:
-<blockquote>One of the best reasons to use a vector as opposed to an array is the RAII idiom. Basically, in order for c++ code to be exception-safe, any dynamically allocated memory or other resources should be encapsulated within objects. These objects should have destructors that free these resources.
-When an exception goes unhandled, the ONLY things that are gaurenteed to be called are the destructors of objects on the stack. If you dynamically allocate memory outside of an object, and an uncaught exception is thrown somewhere before it is deleted, you have a memory leak.
-It's also a nice way to avoid having to remember to use delete.</blockquote>
-</li>
-</ul>
-
-
-
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 11, 2014</span>
-        <a class="post-link" href="/c++/2014/07/11/challenge-1-accepting-console-input/">Challenge 1: Accepting console input</a><br>
-        Lets read in strings. we will give n the number of strings then the strings.
-<blockquote>
-
-
-      </li>
-    
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+  </article>
 
 </div>
-
       </div>
     </div>
 

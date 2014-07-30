@@ -1,0 +1,212 @@
+---
+layout: post
+title: Simple BlackJackChecker
+categories:
+- C++
+tags:
+- C++
+---
+
+Wanted to add something very quick before heading to bed. I'm going to edit this post when I wake up. Here's my first take on <a href="http://www.reddit.com/r/dailyprogrammer/comments/29zut0/772014_challenge_170_easy_blackjack_checker/" title="Reddit's simple blackjack checker">Reddit's simple blackjack checker</a>. Seems to work, and I think it's fairly elegant, tbh, but I'll have a better look when it's not 6 in the morning :).</p>
+
+Edit: I was reading the code again today. Some of the things I would change are:</p>
+<ul>
+<li>Spit the work into input phase and output phase. In input phase, simply store the strings. I feel like that's probably good programming practice.</li>
+<li>Reduce the number of lines in main, although there are that many. Split the different areas into functions.</li>
+<li>Add more objected orientedness to make this more tidy. It's a little bit messy right now.</li>
+</ul>
+
+<!--more--></p>
+
+[code language="cpp"]
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;</p>
+
+using namespace std;</p>
+
+struct Player
+{
+    string Name = &quot;&quot;;
+    int currentTotal = 0;
+    int bestTotal = 0;
+    int Aces = 0;
+    bool folded = false;
+    int NumberOfCards = 0;
+    void AddValue(int val)
+    {
+        if (val == 1)
+            Aces++;
+        else
+            currentTotal += val;</p>
+
+        bestTotal = getBestTotal();
+        if (bestTotal &gt; 21)
+            folded = true;
+        NumberOfCards++;
+    }
+    int getBestTotal()
+    {
+        int tempTotal = currentTotal;
+        int tempAces = Aces;
+        if (tempAces &gt; 1)
+        {
+            //The other aces need to be 1s to get the best value so
+            tempTotal += (tempAces - 1);
+            tempAces = 1;
+        }
+        if ( tempTotal + tempAces*11 &lt;= 21)
+            return tempTotal + tempAces * 11;
+        else
+            return tempTotal + tempAces;
+    }</p>
+
+};</p>
+
+int ConvertCardToInt(string Card)
+{
+    int output = 0;
+    if (Card == &quot;Ace&quot;){
+        output = 1;
+    }
+    else if (Card == &quot;King&quot;){
+        output = 10;
+    }
+    else if (Card == &quot;Queen&quot;){
+        output = 10;
+    }
+    else if (Card == &quot;Jack&quot;){
+        output = 10;
+    }
+    else if (Card == &quot;Ten&quot;){
+        output = 10;
+    }
+    else if (Card == &quot;Nine&quot;){
+        output = 9;
+    }
+    else if (Card == &quot;Eight&quot;){
+        output = 8;
+    }
+    else if (Card == &quot;Seven&quot;){
+        output = 7;
+    }
+    else if (Card == &quot;Six&quot;){
+        output = 6;
+    }
+    else if (Card == &quot;Five&quot;){
+        output = 5;
+    }
+    else if (Card == &quot;Four&quot;){
+        output = 4;
+    }
+    else if (Card == &quot;Three&quot;){
+        output = 3;
+    }
+    else if (Card == &quot;Two&quot;){
+        output = 2;
+    }
+    else
+    {
+        output = 0;
+    }
+    return output;
+}</p>
+
+vector&lt;string&gt; wordCreater(string input)
+{
+    vector&lt;string&gt; output;
+    // Let's get the name out of the way first
+    size_t currentStartPos = input.find_first_of(':');
+    string temp = input.substr(0, currentStartPos);
+    output.push_back(temp);
+    size_t increaser = currentStartPos;
+    do
+    {
+        currentStartPos = increaser + 2;    //Assuming there's a space after the delimiter
+        increaser = input.find_first_of(',', currentStartPos);
+        temp = input.substr(currentStartPos, increaser - currentStartPos);
+        output.push_back(temp);
+    } while (increaser != string::npos);
+    return output;
+}</p>
+
+string getCardVal(string input)
+{
+    //We know the first word is the card value, so just get that
+    size_t FirstSpacePosition = input.find_first_of(' ');
+    return input.substr(0, FirstSpacePosition);
+}</p>
+
+template &lt;typename T&gt;
+void deletePtr(T* const ptr)
+{
+    delete ptr;
+}</p>
+
+bool comparePlayers(Player* i, Player* j)
+{
+    if (i-&gt;folded &amp;&amp; j-&gt;folded)
+        return true; //doesn't even matter</p>
+
+    if (i-&gt;folded &amp;&amp; !j-&gt;folded)
+    {
+        return true;
+    }
+    else if (!i-&gt;folded &amp;&amp; j-&gt;folded)
+    {
+        return false;
+    }
+    //Check for 5 card trick
+    else if (i-&gt;NumberOfCards &gt;= 5)
+    {
+        return false;
+    }
+    else if (j-&gt;NumberOfCards &gt;= 5)
+    {
+        return true;
+    }
+    // both are either not folded
+    else if (i-&gt;bestTotal &lt; j-&gt;bestTotal)
+        return true;
+    else
+        return false;
+}
+int main(int argc, const char** argv)
+{
+    vector&lt;Player*&gt; Players;
+    // Get the number of
+    int NumberOfPlayers = 0;
+    string temp;
+    getline(cin, temp);</p>
+
+    NumberOfPlayers = atoi(&amp;temp[0]);
+    for (int i; i &lt; NumberOfPlayers; i++)
+    {
+        getline(cin, temp);
+        Player* player = new Player();
+        vector&lt;string&gt; tokens = wordCreater(temp);
+        player-&gt;Name = tokens[0];</p>
+
+        for (vector&lt;string&gt;::iterator iter = tokens.begin() + 1; iter != tokens.end(); iter++){
+            string cardValue = getCardVal(*iter);
+            player-&gt;AddValue(ConvertCardToInt(cardValue));
+        }
+        Players.push_back(player);
+    }
+    sort(Players.begin(), Players.end(), comparePlayers);</p>
+
+    //Winner
+    if (!(*(Players.end() - 1))-&gt;folded)
+    {
+        string trick = ((*(Players.end() - 1))-&gt;NumberOfCards &gt;= 5 ) ? &quot; with a 5-card trick!&quot; : &quot;!&quot;;
+        cout &lt;&lt; &quot;\n&quot; + (*(Players.end() - 1))-&gt;Name + &quot; has won&quot; + trick;
+    }
+    else
+        printf(&quot;\nNo one won!&quot;);</p>
+
+    //clean up
+    for_each(Players.begin(), Players.end(), deletePtr&lt;Player&gt;);</p>
+
+    return 0;
+}[/code]</p>
