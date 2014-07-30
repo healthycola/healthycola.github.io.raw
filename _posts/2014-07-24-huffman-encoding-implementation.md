@@ -34,17 +34,17 @@ This was the first time I had a chance to work with the map data structure in C+
 Once I generated the frequency list, I went ahead and created the tree using nodes. Each node contain a few things - frequency of that particular character (or parent), the value of the character if it was a leaf node, and the pointers to the left and right nodes (null upon initialization, and it remains null if they are leaf nodes).
 
 
-[code language="cpp"]
+{% highlight c++ %}
 void generateTree()
     {
-        vector&lt;HuffEncNode*&gt; TreeNodes;
-        for (map&lt;char, int&gt;::iterator it = frequencyChart.begin(); it != frequencyChart.end(); it++)
+        vector<HuffEncNode*> TreeNodes;
+        for (map<char, int>::iterator it = frequencyChart.begin(); it != frequencyChart.end(); it++)
         {
-            HuffEncNode* leafNode = new HuffEncNode((it)-&gt;first, (it)-&gt;second);
+            HuffEncNode* leafNode = new HuffEncNode((it)->first, (it)->second);
             TreeNodes.push_back(leafNode);
         }
         sort(TreeNodes.begin(), TreeNodes.end(), HuffEncNode::compare);
-        while (TreeNodes.size() &gt; 1)
+        while (TreeNodes.size() > 1)
         {
             //Pop last two elements
             HuffEncNode* RightNode = TreeNodes.back();
@@ -53,7 +53,7 @@ void generateTree()
             TreeNodes.pop_back();
 
 
-            HuffEncNode* parentNode = new HuffEncNode(RightNode-&gt;frequency + LeftNode-&gt;frequency, LeftNode, RightNode);
+            HuffEncNode* parentNode = new HuffEncNode(RightNode->frequency + LeftNode->frequency, LeftNode, RightNode);
             TreeNodes.push_back(parentNode);
             sort(TreeNodes.begin(), TreeNodes.end(), HuffEncNode::compare);
         }
@@ -61,9 +61,9 @@ void generateTree()
 
 
         //Generate the encoding map
-        parentNode-&gt;generateCodes(&quot;&quot;, &amp;encodedMap);
+        parentNode->generateCodes("", &encodedMap);
     }
-[/code]
+{% endhighlight %}
 
 
 The algorithm itself is described on the wikipedia page for Huffman encoding. The last bit of the code which says Generate the encoding map, essentially traverses down the tree and saves the codes for each character in a map for easier access during the encoding process. 
@@ -72,30 +72,29 @@ The algorithm itself is described on the wikipedia page for Huffman encoding. Th
 During the decoding process, the program would simply traverse down the tree based on the bit (1 or 0) until it hit a character. That's the beauty of Huffman Encoding.
 
 
-[code language="cpp"]
+{% highlight c++ %}
 char deCode(string input, int* characterLocation)
-        {
-            if (leftNode == NULL &amp;&amp; rightNode == NULL)
-            {
-                //leaf node
-                return ASCIIVal;
-            }
+{
+    if (leftNode == NULL && rightNode == NULL)
+    {
+        //leaf node
+        return ASCIIVal;
+    }
 
-
-            if (input[*characterLocation] == '0')
-            {
-                //go into the right node
-                (*characterLocation)++;
-                return rightNode-&gt;deCode(input, characterLocation);
-            }
-            else
-            {
-                //go into the left node
-                (*characterLocation)++;
-                return leftNode-&gt;deCode(input, characterLocation);
-            }
-        }
-[/code]
+    if (input[*characterLocation] == '0')
+    {
+        //go into the right node
+        (*characterLocation)++;
+        return rightNode->deCode(input, characterLocation);
+    }
+    else
+    {
+        //go into the left node
+        (*characterLocation)++;
+        return leftNode->deCode(input, characterLocation);
+    }
+}
+{% endhighlight %}
 
 
 The sample that the challenge wanted us to use was as follows:

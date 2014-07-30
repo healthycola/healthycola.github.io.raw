@@ -7,40 +7,40 @@ tags:
 - C++
 ---
 
-This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).</p>
-
-Major things I'm happy about:</p>
+This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).
+<!--more-->
+Major things I'm happy about:
 <ul>
 <li>Simple tokenizer - It's just good to have this code. I think it's reusable.</li>
 <li>Decent organization - A Card class and a Hand class was created. I think the organization is decent, not amazing, but it's getting there.</li>
 </ul>
 
-Areas I need to improve on:</p>
+Areas I need to improve on:
 <ul>
 <li>Rummy Run Detector - At the moment it's really brute-forcy. Gotta think of a better idea to go about it.</li>
 <li>Separation - Could use better separation between input and output areas of the program, just for good coding practice.</li>
 </ul>
 
-<!--more--></p>
+<!--more-->
 
-[code language="cpp"]
-#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-#include &lt;string&gt;</p>
+{% highlight c++ %}
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
 
 using namespace std;
 int RunLength = 3;
-int SetLength = 3;</p>
+int SetLength = 3;
 
 enum Suite
 {
     Spades, Hearts, Clubs, Diamonds, Unknown
-};</p>
+};
 
-static const vector&lt;string&gt; tokenizeStrings(string input, string delimiter, int NumberOfSpacesAfterDelimiter)
+static const vector<string> tokenizeStrings(string input, string delimiter, int NumberOfSpacesAfterDelimiter)
 {
-    vector&lt;string&gt; output;
+    vector<string> output;
     size_t start;
     size_t found = -1 - NumberOfSpacesAfterDelimiter;  //Two because of spaces after delimiter
     string temp;
@@ -51,55 +51,55 @@ static const vector&lt;string&gt; tokenizeStrings(string input, string delimiter
         output.push_back(temp);
     } while(found != string::npos);
     return output;
-}</p>
+}
 
 struct Card
 {
     Suite m_suite;
-    int m_value;</p>
+    int m_value;
 
     static const string CardValues[13];
     static const string CardSuits[4];
     static const int ConvertCardValueToInt(string Card)
     {
         int output = 0;
-        if (Card == &quot;ace&quot;){
+        if (Card == "ace"){
             output = 1;
         }
-        else if (Card == &quot;king&quot;){
+        else if (Card == "king"){
             output = 13;
         }
-        else if (Card == &quot;queen&quot;){
+        else if (Card == "queen"){
             output = 12;
         }
-        else if (Card == &quot;jack&quot;){
+        else if (Card == "jack"){
             output = 11;
         }
-        else if (Card == &quot;ten&quot;){
+        else if (Card == "ten"){
             output = 10;
         }
-        else if (Card == &quot;nine&quot;){
+        else if (Card == "nine"){
             output = 9;
         }
-        else if (Card == &quot;eight&quot;){
+        else if (Card == "eight"){
             output = 8;
         }
-        else if (Card == &quot;seven&quot;){
+        else if (Card == "seven"){
             output = 7;
         }
-        else if (Card == &quot;six&quot;){
+        else if (Card == "six"){
             output = 6;
         }
-        else if (Card == &quot;five&quot;){
+        else if (Card == "five"){
             output = 5;
         }
-        else if (Card == &quot;four&quot;){
+        else if (Card == "four"){
             output = 4;
         }
-        else if (Card == &quot;three&quot;){
+        else if (Card == "three"){
             output = 3;
         }
-        else if (Card == &quot;two&quot;){
+        else if (Card == "two"){
             output = 2;
         }
         else
@@ -107,149 +107,149 @@ struct Card
             output = 0;
         }
         return output;
-    }</p>
+    }
 
     static const string ConvertIntToCardValue(int Val)
     {
-        if (Val &gt; 0 &amp;&amp; Val &lt;= 13)
-            return CardValues[Val - 1];</p>
+        if (Val > 0 && Val <= 13)
+            return CardValues[Val - 1];
 
-        return &quot;&quot;;
-    }</p>
+        return "";
+    }
 
     static const Suite ConvertCardStringToSuite(string input)
     {
         Suite s = Unknown;
-        if (input == &quot;spades&quot;)
+        if (input == "spades")
             s = Spades;
-        else if (input == &quot;hearts&quot;)
+        else if (input == "hearts")
             s = Hearts;
-        else if (input == &quot;clubs&quot;)
+        else if (input == "clubs")
             s = Clubs;
-        else if (input == &quot;diamonds&quot;)
-            s = Diamonds;</p>
+        else if (input == "diamonds")
+            s = Diamonds;
 
         return s;
-    }</p>
+    }
 
     static const string ConvertCardSuitToString(Suite input)
     {
-        if (input &gt;= 0 &amp;&amp; input &lt;= 3)
-            return CardSuits[input];</p>
+        if (input >= 0 && input <= 3)
+            return CardSuits[input];
 
-        return &quot;&quot;;
-    }</p>
+        return "";
+    }
 
     Card(string CardInput)
     {
         //Accepts inputs such as Ace of Diamonds
-        vector&lt;string&gt; temp = tokenizeStrings(CardInput, &quot; &quot;, 0);
+        vector<string> temp = tokenizeStrings(CardInput, " ", 0);
         m_value = ConvertCardValueToInt(temp[0]);
         m_suite = ConvertCardStringToSuite(temp[2]);
     }
-};</p>
+};
 
-const string Card::CardValues[13] = { &quot;ace&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot;, &quot;six&quot;, &quot;seven&quot;, &quot;eight&quot;, &quot;nine&quot;, &quot;ten&quot;, &quot;jack&quot;, &quot;queen&quot;, &quot;king&quot; };
-const string Card::CardSuits[4] = { &quot;spades&quot;, &quot;hearts&quot;, &quot;clubs&quot;, &quot;diamonds&quot; };</p>
+const string Card::CardValues[13] = { "ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king" };
+const string Card::CardSuits[4] = { "spades", "hearts", "clubs", "diamonds" };
 
-template &lt;class T&gt;
+template <class T>
 void deletePtr(T* ptr)
 {
     delete ptr;
-}</p>
+}
 
 struct Hand
 {
-    vector&lt;Card*&gt; m_hand;
+    vector<Card*> m_hand;
     void AddCard(Card *card)
     {
         m_hand.push_back(card);
-    }</p>
+    }
 
     void cleanUp()
     {
-        for_each(m_hand.begin(), m_hand.end(), deletePtr&lt;Card&gt;);
-    }</p>
+        for_each(m_hand.begin(), m_hand.end(), deletePtr<Card>);
+    }
 
     static bool sorter(Card* i, Card* j)
     {
-        if (i-&gt;m_suite != j-&gt;m_suite)
-            return (int)(i-&gt;m_suite) &lt; (int)(j-&gt;m_suite);
+        if (i->m_suite != j->m_suite)
+            return (int)(i->m_suite) < (int)(j->m_suite);
         else
-            return i-&gt;m_value &lt; j-&gt;m_value;
-    }</p>
+            return i->m_value < j->m_value;
+    }
 
     void sortHand()
     {
         sort(m_hand.begin(), m_hand.end(), Hand::sorter);
-    }</p>
+    }
 
     Card* CheckForSet(Card _card)
     {
         int NewSet = _card.m_value;
         int NumberOfCardsForSet = 1;
-        for (vector&lt;Card*&gt;::iterator card = m_hand.begin(); card != m_hand.end(); card++)
+        for (vector<Card*>::iterator card = m_hand.begin(); card != m_hand.end(); card++)
         {
-            if ((*card)-&gt;m_value == NewSet)
+            if ((*card)->m_value == NewSet)
                 NumberOfCardsForSet++;
         }
-        if (NumberOfCardsForSet &gt;= SetLength)
+        if (NumberOfCardsForSet >= SetLength)
         {
             // Means we have a set
-            for (vector&lt;Card*&gt;::iterator card = m_hand.begin(); card != m_hand.end(); card++)
+            for (vector<Card*>::iterator card = m_hand.begin(); card != m_hand.end(); card++)
             {
-                if ((*card)-&gt;m_value != NewSet)
+                if ((*card)->m_value != NewSet)
                     return *card;
             }
         }
         return nullptr;
-    }</p>
+    }
 
     Card* CheckForRun(Card _card)
     {
         //Messy as hell
-        vector&lt;Card*&gt; Run;
+        vector<Card*> Run;
         bool isRun = false;
-        for (vector&lt;Card*&gt;::iterator card = m_hand.begin(); card != m_hand.end(); card++)
+        for (vector<Card*>::iterator card = m_hand.begin(); card != m_hand.end(); card++)
         {
             isRun = false;
-            if ((*card)-&gt;m_suite != _card.m_suite)
+            if ((*card)->m_suite != _card.m_suite)
             {
                 continue;
-            }</p>
+            }
 
             Run.clear();
-            Run.push_back(&amp;_card);
-            for (vector&lt;Card*&gt;::iterator card_set = card; card_set != m_hand.end(); card_set++)
+            Run.push_back(&_card);
+            for (vector<Card*>::iterator card_set = card; card_set != m_hand.end(); card_set++)
             {
-                if (Run.size() &gt;= RunLength || (*card_set)-&gt;m_suite != _card.m_suite)
+                if (Run.size() >= RunLength || (*card_set)->m_suite != _card.m_suite)
                     break;
                 Run.push_back((*card_set));
-            }</p>
+            }
 
-            if (Run.size() &lt; RunLength)
+            if (Run.size() < RunLength)
             {
                 //No runs possible
                 isRun = false;
                 break;
-            }</p>
+            }
 
             sort(Run.begin(), Run.end(), sorter);
-            if ((*(Run.end()-1))-&gt;m_value - (*(Run.begin()))-&gt;m_value == RunLength - 1)
-                isRun = true;</p>
+            if ((*(Run.end()-1))->m_value - (*(Run.begin()))->m_value == RunLength - 1)
+                isRun = true;
 
             //Found a Run?
             if (isRun)
             {
-                vector&lt;Card*&gt;::iterator cardReturn = m_hand.begin();
+                vector<Card*>::iterator cardReturn = m_hand.begin();
                 for (; cardReturn != m_hand.end(); cardReturn++)
                 {
                     bool foundCardReturn = true;
-                    for (vector&lt;Card*&gt;::iterator set_check = Run.begin(); set_check != Run.end() - 1; set_check++)
+                    for (vector<Card*>::iterator set_check = Run.begin(); set_check != Run.end() - 1; set_check++)
                     {
                         //CHeck if current cardReturn is in the Run.
-                        if (*set_check == &amp;_card)
-                            continue;</p>
+                        if (*set_check == &_card)
+                            continue;
 
                         if (*cardReturn == *set_check)
                         {
@@ -265,76 +265,76 @@ struct Hand
                 }
                 break;
             }
-        }</p>
+        }
 
         return nullptr;
     }
-};</p>
+};
 
 void outputWin(Card* card)
 {
     if (card)
     {
-        cout &lt;&lt; &quot;Swap the new card with &quot; &lt;&lt; Card::ConvertIntToCardValue(card-&gt;m_value) &lt;&lt; &quot; of &quot; &lt;&lt; Card::ConvertCardSuitToString(card-&gt;m_suite) &lt;&lt; &quot; to win!\n&quot;;
+        cout << "Swap the new card with " << Card::ConvertIntToCardValue(card->m_value) << " of " << Card::ConvertCardSuitToString(card->m_suite) << " to win!\n";
     }
     else
     {
-        printf(&quot;No possible winning hand.\n&quot;);
-    }</p>
+        printf("No possible winning hand.\n");
+    }
 
-}</p>
+}
 
 int main(int argc, char** argv)
 {
-    //string sampleString = &quot;Two of Diamonds, Three of Diamonds, Four of Diamonds, Seven of Diamonds, Seven of Clubs, Seven of Hearts, Jack of Hearts&quot;;
-    //string newCard = &quot;Five of Diamonds&quot;;</p>
+    //string sampleString = "Two of Diamonds, Three of Diamonds, Four of Diamonds, Seven of Diamonds, Seven of Clubs, Seven of Hearts, Jack of Hearts";
+    //string newCard = "Five of Diamonds";
 
     string sampleString, newCard;
-    cout &lt;&lt; &quot;What is the initial hand?: &quot;;
+    cout << "What is the initial hand?: ";
     getline(cin, sampleString);
-    cout &lt;&lt; &quot;What is the added hand?: &quot;;
-    getline(cin, newCard);</p>
+    cout << "What is the added hand?: ";
+    getline(cin, newCard);
 
     Hand myHand;
     //transform everything to lower case
     transform(sampleString.begin(), sampleString.end(), sampleString.begin(), ::tolower);
     transform(newCard.begin(), newCard.end(), newCard.begin(), ::tolower);
-    vector&lt;string&gt; hand = tokenizeStrings(sampleString, &quot;,:&quot;, 1);</p>
+    vector<string> hand = tokenizeStrings(sampleString, ",:", 1);
 
     // For each of the cards, we need to create cards out of them
-    for (vector&lt;string&gt;::iterator _card = hand.begin(); _card != hand.end(); _card++)
+    for (vector<string>::iterator _card = hand.begin(); _card != hand.end(); _card++)
         myHand.AddCard(new Card(*_card));
-    myHand.sortHand();</p>
+    myHand.sortHand();
 
-    Card* swappableCard = new Card(newCard);</p>
+    Card* swappableCard = new Card(newCard);
 
-    cout &lt;&lt; &quot;Checking for a run with length &quot; &lt;&lt; RunLength &lt;&lt; &quot;\n&quot;;
+    cout << "Checking for a run with length " << RunLength << "\n";
     Card* swappedCard = myHand.CheckForRun(*swappableCard);
-    outputWin(swappedCard);</p>
+    outputWin(swappedCard);
 
-    cout &lt;&lt; &quot;Checking for a set with length &quot; &lt;&lt; SetLength &lt;&lt; &quot;\n&quot;;
+    cout << "Checking for a set with length " << SetLength << "\n";
     swappedCard = myHand.CheckForSet(*swappableCard);
-    outputWin(swappedCard);</p>
+    outputWin(swappedCard);
 
     RunLength = 4;
-    cout &lt;&lt; &quot;Checking for a run with length &quot; &lt;&lt; RunLength &lt;&lt; &quot;\n&quot;;
+    cout << "Checking for a run with length " << RunLength << "\n";
     swappedCard = myHand.CheckForRun(*swappableCard);
-    outputWin(swappedCard);</p>
+    outputWin(swappedCard);
 
     SetLength = 4;
-    cout &lt;&lt; &quot;Checking for a set with length &quot; &lt;&lt; SetLength &lt;&lt; &quot;\n&quot;;
+    cout << "Checking for a set with length " << SetLength << "\n";
     swappedCard = myHand.CheckForSet(*swappableCard);
-    outputWin(swappedCard);</p>
+    outputWin(swappedCard);
 
     //Clean up
     delete swappableCard;
-    myHand.cleanUp();</p>
+    myHand.cleanUp();
 
     return 0;
 }
-[/code]</p>
+{% endhighlight %}
 
-Here's a sample of an input and output:</p>
+Here's a sample of an input and output:
 <pre>What is the initial hand?: Two of Diamonds, Three of Diamonds, Four of Diamonds, Seven of Diamonds, Seven of Clubs, Seven of Hearts, Jack of Hearts
 What is the added hand?: Five of Diamonds
 Checking for a run with length 3
@@ -347,13 +347,13 @@ Checking for a set with length 4
 No possible winning hand.
 </pre>
 
-<span style="text-decoration:underline;"><strong>A brief explanation on the two checker methods</strong></span></p>
+<span style="text-decoration:underline;"><strong>A brief explanation on the two checker methods</strong></span>
 
 <em>Set Checker:</em>
-Simply go through the hand and count the number of cards with the same value as the new card. If it exceeds 3 of 4, then you have a set. Then just go through the hand once more and swap with the first card that isn't the same value as the new card.</p>
+Simply go through the hand and count the number of cards with the same value as the new card. If it exceeds 3 of 4, then you have a set. Then just go through the hand once more and swap with the first card that isn't the same value as the new card.
 
 <em>Run Checker:
 </em>This code is significantly more messy. Let's see. Go through each card in the (sorted) hand until you get to the same suit as the new card. (Aside: the sort method that I've implemented, sorts the hands in terms of values grouped with their individual suits). Then, depending on if we're checking for a 3 card or 4 card run, we create a temporary second set called a Run (which is essentially a vector of cards).
 We insert the new card in, and then insert the next 2 to 3 cards in depending on the length of the run we're interested in. When we're doing this, and we encounter a card with a different suit than our new card, we know that a run isn't possible since we've hit a new suit in a sorted hand, so break out of the function. If we are successful in adding the right number of cards, we sort this mini hand. Then we subtract the largest value from the smallest value, and the result should be the length of the run we are interested in minus 1. So for instance, if we are interested in a run of 4 cards, and we have 3, 4, 5, 6 of the same suit, then 6 - 3 would give us 3. Now if this is the case, then we have successfully found a run!
 To find a card we can remove from the hand, I use the brute force method. Which means going through the hand once again and as soon as I hit a card which is not in the mini-hand, I can discard that card.
-<em>Clearly this method can be improved upon....</em></p>
+<em>Clearly this method can be improved upon....</em>

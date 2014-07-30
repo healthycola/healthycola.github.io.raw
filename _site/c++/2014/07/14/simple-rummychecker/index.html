@@ -61,334 +61,332 @@
   </header>
 
   <article class="post-content">
-  This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).</p>
-
-Major things I'm happy about:</p>
+  <p>This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it’s more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).
+<!--more-->
+Major things I’m happy about:</p>
 <ul>
 <li>Simple tokenizer - It's just good to have this code. I think it's reusable.</li>
 <li>Decent organization - A Card class and a Hand class was created. I think the organization is decent, not amazing, but it's getting there.</li>
 </ul>
 
-Areas I need to improve on:</p>
+<p>Areas I need to improve on:</p>
 <ul>
 <li>Rummy Run Detector - At the moment it's really brute-forcy. Gotta think of a better idea to go about it.</li>
 <li>Separation - Could use better separation between input and output areas of the program, just for good coding practice.</li>
 </ul>
 
-<!--more--></p>
+<!--more-->
 
-[code language="cpp"]
-#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-#include &lt;string&gt;</p>
+<div class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;string&gt;</span>
 
-using namespace std;
-int RunLength = 3;
-int SetLength = 3;</p>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">RunLength</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">SetLength</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 
-enum Suite
-{
-    Spades, Hearts, Clubs, Diamonds, Unknown
-};</p>
+<span class="k">enum</span> <span class="n">Suite</span>
+<span class="p">{</span>
+    <span class="n">Spades</span><span class="p">,</span> <span class="n">Hearts</span><span class="p">,</span> <span class="n">Clubs</span><span class="p">,</span> <span class="n">Diamonds</span><span class="p">,</span> <span class="n">Unknown</span>
+<span class="p">};</span>
 
-static const vector&lt;string&gt; tokenizeStrings(string input, string delimiter, int NumberOfSpacesAfterDelimiter)
-{
-    vector&lt;string&gt; output;
-    size_t start;
-    size_t found = -1 - NumberOfSpacesAfterDelimiter;  //Two because of spaces after delimiter
-    string temp;
-    do {
-        start = found + 1 + NumberOfSpacesAfterDelimiter;  //Two because of spaces
-        found = input.find_first_of(delimiter, start);
-        temp = input.substr(start, found - start);
-        output.push_back(temp);
-    } while(found != string::npos);
-    return output;
-}</p>
+<span class="k">static</span> <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">tokenizeStrings</span><span class="p">(</span><span class="n">string</span> <span class="n">input</span><span class="p">,</span> <span class="n">string</span> <span class="n">delimiter</span><span class="p">,</span> <span class="kt">int</span> <span class="n">NumberOfSpacesAfterDelimiter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">output</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">start</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">found</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">NumberOfSpacesAfterDelimiter</span><span class="p">;</span>  <span class="c1">//Two because of spaces after delimiter</span>
+    <span class="n">string</span> <span class="n">temp</span><span class="p">;</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">found</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">NumberOfSpacesAfterDelimiter</span><span class="p">;</span>  <span class="c1">//Two because of spaces</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="n">find_first_of</span><span class="p">(</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">start</span><span class="p">);</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">input</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">found</span> <span class="o">-</span> <span class="n">start</span><span class="p">);</span>
+        <span class="n">output</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="n">found</span> <span class="o">!=</span> <span class="n">string</span><span class="o">::</span><span class="n">npos</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">output</span><span class="p">;</span>
+<span class="p">}</span>
 
-struct Card
-{
-    Suite m_suite;
-    int m_value;</p>
+<span class="k">struct</span> <span class="n">Card</span>
+<span class="p">{</span>
+    <span class="n">Suite</span> <span class="n">m_suite</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
 
-    static const string CardValues[13];
-    static const string CardSuits[4];
-    static const int ConvertCardValueToInt(string Card)
-    {
-        int output = 0;
-        if (Card == &quot;ace&quot;){
-            output = 1;
-        }
-        else if (Card == &quot;king&quot;){
-            output = 13;
-        }
-        else if (Card == &quot;queen&quot;){
-            output = 12;
-        }
-        else if (Card == &quot;jack&quot;){
-            output = 11;
-        }
-        else if (Card == &quot;ten&quot;){
-            output = 10;
-        }
-        else if (Card == &quot;nine&quot;){
-            output = 9;
-        }
-        else if (Card == &quot;eight&quot;){
-            output = 8;
-        }
-        else if (Card == &quot;seven&quot;){
-            output = 7;
-        }
-        else if (Card == &quot;six&quot;){
-            output = 6;
-        }
-        else if (Card == &quot;five&quot;){
-            output = 5;
-        }
-        else if (Card == &quot;four&quot;){
-            output = 4;
-        }
-        else if (Card == &quot;three&quot;){
-            output = 3;
-        }
-        else if (Card == &quot;two&quot;){
-            output = 2;
-        }
-        else
-        {
-            output = 0;
-        }
-        return output;
-    }</p>
+    <span class="k">static</span> <span class="k">const</span> <span class="n">string</span> <span class="n">CardValues</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="n">string</span> <span class="n">CardSuits</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="nf">ConvertCardValueToInt</span><span class="p">(</span><span class="n">string</span> <span class="n">Card</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">output</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;ace&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;king&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;queen&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;jack&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;ten&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;nine&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;eight&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;seven&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;six&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;five&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;four&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;three&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Card</span> <span class="o">==</span> <span class="s">&quot;two&quot;</span><span class="p">){</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    static const string ConvertIntToCardValue(int Val)
-    {
-        if (Val &gt; 0 &amp;&amp; Val &lt;= 13)
-            return CardValues[Val - 1];</p>
+    <span class="k">static</span> <span class="k">const</span> <span class="n">string</span> <span class="nf">ConvertIntToCardValue</span><span class="p">(</span><span class="kt">int</span> <span class="n">Val</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Val</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">Val</span> <span class="o">&lt;=</span> <span class="mi">13</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">CardValues</span><span class="p">[</span><span class="n">Val</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
 
-        return &quot;&quot;;
-    }</p>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    static const Suite ConvertCardStringToSuite(string input)
-    {
-        Suite s = Unknown;
-        if (input == &quot;spades&quot;)
-            s = Spades;
-        else if (input == &quot;hearts&quot;)
-            s = Hearts;
-        else if (input == &quot;clubs&quot;)
-            s = Clubs;
-        else if (input == &quot;diamonds&quot;)
-            s = Diamonds;</p>
+    <span class="k">static</span> <span class="k">const</span> <span class="n">Suite</span> <span class="nf">ConvertCardStringToSuite</span><span class="p">(</span><span class="n">string</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">Suite</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Unknown</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">==</span> <span class="s">&quot;spades&quot;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Spades</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">==</span> <span class="s">&quot;hearts&quot;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Hearts</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">==</span> <span class="s">&quot;clubs&quot;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Clubs</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">==</span> <span class="s">&quot;diamonds&quot;</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">Diamonds</span><span class="p">;</span>
 
-        return s;
-    }</p>
+        <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    static const string ConvertCardSuitToString(Suite input)
-    {
-        if (input &gt;= 0 &amp;&amp; input &lt;= 3)
-            return CardSuits[input];</p>
+    <span class="k">static</span> <span class="k">const</span> <span class="n">string</span> <span class="nf">ConvertCardSuitToString</span><span class="p">(</span><span class="n">Suite</span> <span class="n">input</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">input</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">input</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">CardSuits</span><span class="p">[</span><span class="n">input</span><span class="p">];</span>
 
-        return &quot;&quot;;
-    }</p>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    Card(string CardInput)
-    {
-        //Accepts inputs such as Ace of Diamonds
-        vector&lt;string&gt; temp = tokenizeStrings(CardInput, &quot; &quot;, 0);
-        m_value = ConvertCardValueToInt(temp[0]);
-        m_suite = ConvertCardStringToSuite(temp[2]);
-    }
-};</p>
+    <span class="n">Card</span><span class="p">(</span><span class="n">string</span> <span class="n">CardInput</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//Accepts inputs such as Ace of Diamonds</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">tokenizeStrings</span><span class="p">(</span><span class="n">CardInput</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">m_value</span> <span class="o">=</span> <span class="n">ConvertCardValueToInt</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">m_suite</span> <span class="o">=</span> <span class="n">ConvertCardStringToSuite</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
 
-const string Card::CardValues[13] = { &quot;ace&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot;, &quot;six&quot;, &quot;seven&quot;, &quot;eight&quot;, &quot;nine&quot;, &quot;ten&quot;, &quot;jack&quot;, &quot;queen&quot;, &quot;king&quot; };
-const string Card::CardSuits[4] = { &quot;spades&quot;, &quot;hearts&quot;, &quot;clubs&quot;, &quot;diamonds&quot; };</p>
+<span class="k">const</span> <span class="n">string</span> <span class="n">Card</span><span class="o">::</span><span class="n">CardValues</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;ace&quot;</span><span class="p">,</span> <span class="s">&quot;two&quot;</span><span class="p">,</span> <span class="s">&quot;three&quot;</span><span class="p">,</span> <span class="s">&quot;four&quot;</span><span class="p">,</span> <span class="s">&quot;five&quot;</span><span class="p">,</span> <span class="s">&quot;six&quot;</span><span class="p">,</span> <span class="s">&quot;seven&quot;</span><span class="p">,</span> <span class="s">&quot;eight&quot;</span><span class="p">,</span> <span class="s">&quot;nine&quot;</span><span class="p">,</span> <span class="s">&quot;ten&quot;</span><span class="p">,</span> <span class="s">&quot;jack&quot;</span><span class="p">,</span> <span class="s">&quot;queen&quot;</span><span class="p">,</span> <span class="s">&quot;king&quot;</span> <span class="p">};</span>
+<span class="k">const</span> <span class="n">string</span> <span class="n">Card</span><span class="o">::</span><span class="n">CardSuits</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;spades&quot;</span><span class="p">,</span> <span class="s">&quot;hearts&quot;</span><span class="p">,</span> <span class="s">&quot;clubs&quot;</span><span class="p">,</span> <span class="s">&quot;diamonds&quot;</span> <span class="p">};</span>
 
-template &lt;class T&gt;
-void deletePtr(T* ptr)
-{
-    delete ptr;
-}</p>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">deletePtr</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span>
 
-struct Hand
-{
-    vector&lt;Card*&gt; m_hand;
-    void AddCard(Card *card)
-    {
-        m_hand.push_back(card);
-    }</p>
+<span class="k">struct</span> <span class="n">Hand</span>
+<span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;</span> <span class="n">m_hand</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">AddCard</span><span class="p">(</span><span class="n">Card</span> <span class="o">*</span><span class="n">card</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">m_hand</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">card</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    void cleanUp()
-    {
-        for_each(m_hand.begin(), m_hand.end(), deletePtr&lt;Card&gt;);
-    }</p>
+    <span class="kt">void</span> <span class="nf">cleanUp</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">for_each</span><span class="p">(</span><span class="n">m_hand</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">deletePtr</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">&gt;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    static bool sorter(Card* i, Card* j)
-    {
-        if (i-&gt;m_suite != j-&gt;m_suite)
-            return (int)(i-&gt;m_suite) &lt; (int)(j-&gt;m_suite);
-        else
-            return i-&gt;m_value &lt; j-&gt;m_value;
-    }</p>
+    <span class="k">static</span> <span class="kt">bool</span> <span class="nf">sorter</span><span class="p">(</span><span class="n">Card</span><span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="n">Card</span><span class="o">*</span> <span class="n">j</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">-&gt;</span><span class="n">m_suite</span> <span class="o">!=</span> <span class="n">j</span><span class="o">-&gt;</span><span class="n">m_suite</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">i</span><span class="o">-&gt;</span><span class="n">m_suite</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">j</span><span class="o">-&gt;</span><span class="n">m_suite</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="n">i</span><span class="o">-&gt;</span><span class="n">m_value</span> <span class="o">&lt;</span> <span class="n">j</span><span class="o">-&gt;</span><span class="n">m_value</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    void sortHand()
-    {
-        sort(m_hand.begin(), m_hand.end(), Hand::sorter);
-    }</p>
+    <span class="kt">void</span> <span class="nf">sortHand</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">sort</span><span class="p">(</span><span class="n">m_hand</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">Hand</span><span class="o">::</span><span class="n">sorter</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    Card* CheckForSet(Card _card)
-    {
-        int NewSet = _card.m_value;
-        int NumberOfCardsForSet = 1;
-        for (vector&lt;Card*&gt;::iterator card = m_hand.begin(); card != m_hand.end(); card++)
-        {
-            if ((*card)-&gt;m_value == NewSet)
-                NumberOfCardsForSet++;
-        }
-        if (NumberOfCardsForSet &gt;= SetLength)
-        {
-            // Means we have a set
-            for (vector&lt;Card*&gt;::iterator card = m_hand.begin(); card != m_hand.end(); card++)
-            {
-                if ((*card)-&gt;m_value != NewSet)
-                    return *card;
-            }
-        }
-        return nullptr;
-    }</p>
+    <span class="n">Card</span><span class="o">*</span> <span class="nf">CheckForSet</span><span class="p">(</span><span class="n">Card</span> <span class="n">_card</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">NewSet</span> <span class="o">=</span> <span class="n">_card</span><span class="p">.</span><span class="n">m_value</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">NumberOfCardsForSet</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">card</span> <span class="o">=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">card</span> <span class="o">!=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">card</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="n">card</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">m_value</span> <span class="o">==</span> <span class="n">NewSet</span><span class="p">)</span>
+                <span class="n">NumberOfCardsForSet</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">NumberOfCardsForSet</span> <span class="o">&gt;=</span> <span class="n">SetLength</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// Means we have a set</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">card</span> <span class="o">=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">card</span> <span class="o">!=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">card</span><span class="o">++</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="n">card</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">m_value</span> <span class="o">!=</span> <span class="n">NewSet</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="o">*</span><span class="n">card</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    Card* CheckForRun(Card _card)
-    {
-        //Messy as hell
-        vector&lt;Card*&gt; Run;
-        bool isRun = false;
-        for (vector&lt;Card*&gt;::iterator card = m_hand.begin(); card != m_hand.end(); card++)
-        {
-            isRun = false;
-            if ((*card)-&gt;m_suite != _card.m_suite)
-            {
-                continue;
-            }</p>
+    <span class="n">Card</span><span class="o">*</span> <span class="nf">CheckForRun</span><span class="p">(</span><span class="n">Card</span> <span class="n">_card</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">//Messy as hell</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;</span> <span class="n">Run</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">isRun</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">card</span> <span class="o">=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">card</span> <span class="o">!=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">card</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">isRun</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="n">card</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">m_suite</span> <span class="o">!=</span> <span class="n">_card</span><span class="p">.</span><span class="n">m_suite</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">continue</span><span class="p">;</span>
+            <span class="p">}</span>
 
-            Run.clear();
-            Run.push_back(&amp;_card);
-            for (vector&lt;Card*&gt;::iterator card_set = card; card_set != m_hand.end(); card_set++)
-            {
-                if (Run.size() &gt;= RunLength || (*card_set)-&gt;m_suite != _card.m_suite)
-                    break;
-                Run.push_back((*card_set));
-            }</p>
+            <span class="n">Run</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+            <span class="n">Run</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="o">&amp;</span><span class="n">_card</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">card_set</span> <span class="o">=</span> <span class="n">card</span><span class="p">;</span> <span class="n">card_set</span> <span class="o">!=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">card_set</span><span class="o">++</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">Run</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">RunLength</span> <span class="o">||</span> <span class="p">(</span><span class="o">*</span><span class="n">card_set</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">m_suite</span> <span class="o">!=</span> <span class="n">_card</span><span class="p">.</span><span class="n">m_suite</span><span class="p">)</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="n">Run</span><span class="p">.</span><span class="n">push_back</span><span class="p">((</span><span class="o">*</span><span class="n">card_set</span><span class="p">));</span>
+            <span class="p">}</span>
 
-            if (Run.size() &lt; RunLength)
-            {
-                //No runs possible
-                isRun = false;
-                break;
-            }</p>
+            <span class="k">if</span> <span class="p">(</span><span class="n">Run</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">RunLength</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="c1">//No runs possible</span>
+                <span class="n">isRun</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
 
-            sort(Run.begin(), Run.end(), sorter);
-            if ((*(Run.end()-1))-&gt;m_value - (*(Run.begin()))-&gt;m_value == RunLength - 1)
-                isRun = true;</p>
+            <span class="n">sort</span><span class="p">(</span><span class="n">Run</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">Run</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">sorter</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">((</span><span class="o">*</span><span class="p">(</span><span class="n">Run</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">-&gt;</span><span class="n">m_value</span> <span class="o">-</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">Run</span><span class="p">.</span><span class="n">begin</span><span class="p">()))</span><span class="o">-&gt;</span><span class="n">m_value</span> <span class="o">==</span> <span class="n">RunLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">isRun</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 
-            //Found a Run?
-            if (isRun)
-            {
-                vector&lt;Card*&gt;::iterator cardReturn = m_hand.begin();
-                for (; cardReturn != m_hand.end(); cardReturn++)
-                {
-                    bool foundCardReturn = true;
-                    for (vector&lt;Card*&gt;::iterator set_check = Run.begin(); set_check != Run.end() - 1; set_check++)
-                    {
-                        //CHeck if current cardReturn is in the Run.
-                        if (*set_check == &amp;_card)
-                            continue;</p>
+            <span class="c1">//Found a Run?</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">isRun</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">cardReturn</span> <span class="o">=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+                <span class="k">for</span> <span class="p">(;</span> <span class="n">cardReturn</span> <span class="o">!=</span> <span class="n">m_hand</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">cardReturn</span><span class="o">++</span><span class="p">)</span>
+                <span class="p">{</span>
+                    <span class="kt">bool</span> <span class="n">foundCardReturn</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Card</span><span class="o">*&gt;::</span><span class="n">iterator</span> <span class="n">set_check</span> <span class="o">=</span> <span class="n">Run</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">set_check</span> <span class="o">!=</span> <span class="n">Run</span><span class="p">.</span><span class="n">end</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">set_check</span><span class="o">++</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="c1">//CHeck if current cardReturn is in the Run.</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">set_check</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">_card</span><span class="p">)</span>
+                            <span class="k">continue</span><span class="p">;</span>
 
-                        if (*cardReturn == *set_check)
-                        {
-                            // The card we want to return can't be in the set
-                            foundCardReturn = false;
-                            break;
-                        }
-                    }
-                    if (foundCardReturn)
-                    {
-                        return *cardReturn;
-                    }
-                }
-                break;
-            }
-        }</p>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">cardReturn</span> <span class="o">==</span> <span class="o">*</span><span class="n">set_check</span><span class="p">)</span>
+                        <span class="p">{</span>
+                            <span class="c1">// The card we want to return can&#39;t be in the set</span>
+                            <span class="n">foundCardReturn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+                            <span class="k">break</span><span class="p">;</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">foundCardReturn</span><span class="p">)</span>
+                    <span class="p">{</span>
+                        <span class="k">return</span> <span class="o">*</span><span class="n">cardReturn</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
 
-        return nullptr;
-    }
-};</p>
+        <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
 
-void outputWin(Card* card)
-{
-    if (card)
-    {
-        cout &lt;&lt; &quot;Swap the new card with &quot; &lt;&lt; Card::ConvertIntToCardValue(card-&gt;m_value) &lt;&lt; &quot; of &quot; &lt;&lt; Card::ConvertCardSuitToString(card-&gt;m_suite) &lt;&lt; &quot; to win!\n&quot;;
-    }
-    else
-    {
-        printf(&quot;No possible winning hand.\n&quot;);
-    }</p>
+<span class="kt">void</span> <span class="nf">outputWin</span><span class="p">(</span><span class="n">Card</span><span class="o">*</span> <span class="n">card</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">card</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Swap the new card with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">Card</span><span class="o">::</span><span class="n">ConvertIntToCardValue</span><span class="p">(</span><span class="n">card</span><span class="o">-&gt;</span><span class="n">m_value</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; of &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">Card</span><span class="o">::</span><span class="n">ConvertCardSuitToString</span><span class="p">(</span><span class="n">card</span><span class="o">-&gt;</span><span class="n">m_suite</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; to win!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;No possible winning hand.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-}</p>
+<span class="p">}</span>
 
-int main(int argc, char** argv)
-{
-    //string sampleString = &quot;Two of Diamonds, Three of Diamonds, Four of Diamonds, Seven of Diamonds, Seven of Clubs, Seven of Hearts, Jack of Hearts&quot;;
-    //string newCard = &quot;Five of Diamonds&quot;;</p>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">//string sampleString = &quot;Two of Diamonds, Three of Diamonds, Four of Diamonds, Seven of Diamonds, Seven of Clubs, Seven of Hearts, Jack of Hearts&quot;;</span>
+    <span class="c1">//string newCard = &quot;Five of Diamonds&quot;;</span>
 
-    string sampleString, newCard;
-    cout &lt;&lt; &quot;What is the initial hand?: &quot;;
-    getline(cin, sampleString);
-    cout &lt;&lt; &quot;What is the added hand?: &quot;;
-    getline(cin, newCard);</p>
+    <span class="n">string</span> <span class="n">sampleString</span><span class="p">,</span> <span class="n">newCard</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;What is the initial hand?: &quot;</span><span class="p">;</span>
+    <span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">sampleString</span><span class="p">);</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;What is the added hand?: &quot;</span><span class="p">;</span>
+    <span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">newCard</span><span class="p">);</span>
 
-    Hand myHand;
-    //transform everything to lower case
-    transform(sampleString.begin(), sampleString.end(), sampleString.begin(), ::tolower);
-    transform(newCard.begin(), newCard.end(), newCard.begin(), ::tolower);
-    vector&lt;string&gt; hand = tokenizeStrings(sampleString, &quot;,:&quot;, 1);</p>
+    <span class="n">Hand</span> <span class="n">myHand</span><span class="p">;</span>
+    <span class="c1">//transform everything to lower case</span>
+    <span class="n">transform</span><span class="p">(</span><span class="n">sampleString</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">sampleString</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">sampleString</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="o">::</span><span class="n">tolower</span><span class="p">);</span>
+    <span class="n">transform</span><span class="p">(</span><span class="n">newCard</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">newCard</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">newCard</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="o">::</span><span class="n">tolower</span><span class="p">);</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">hand</span> <span class="o">=</span> <span class="n">tokenizeStrings</span><span class="p">(</span><span class="n">sampleString</span><span class="p">,</span> <span class="s">&quot;,:&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
-    // For each of the cards, we need to create cards out of them
-    for (vector&lt;string&gt;::iterator _card = hand.begin(); _card != hand.end(); _card++)
-        myHand.AddCard(new Card(*_card));
-    myHand.sortHand();</p>
+    <span class="c1">// For each of the cards, we need to create cards out of them</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">_card</span> <span class="o">=</span> <span class="n">hand</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">_card</span> <span class="o">!=</span> <span class="n">hand</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">_card</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">myHand</span><span class="p">.</span><span class="n">AddCard</span><span class="p">(</span><span class="k">new</span> <span class="n">Card</span><span class="p">(</span><span class="o">*</span><span class="n">_card</span><span class="p">));</span>
+    <span class="n">myHand</span><span class="p">.</span><span class="n">sortHand</span><span class="p">();</span>
 
-    Card* swappableCard = new Card(newCard);</p>
+    <span class="n">Card</span><span class="o">*</span> <span class="n">swappableCard</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Card</span><span class="p">(</span><span class="n">newCard</span><span class="p">);</span>
 
-    cout &lt;&lt; &quot;Checking for a run with length &quot; &lt;&lt; RunLength &lt;&lt; &quot;\n&quot;;
-    Card* swappedCard = myHand.CheckForRun(*swappableCard);
-    outputWin(swappedCard);</p>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Checking for a run with length &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">RunLength</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">Card</span><span class="o">*</span> <span class="n">swappedCard</span> <span class="o">=</span> <span class="n">myHand</span><span class="p">.</span><span class="n">CheckForRun</span><span class="p">(</span><span class="o">*</span><span class="n">swappableCard</span><span class="p">);</span>
+    <span class="n">outputWin</span><span class="p">(</span><span class="n">swappedCard</span><span class="p">);</span>
 
-    cout &lt;&lt; &quot;Checking for a set with length &quot; &lt;&lt; SetLength &lt;&lt; &quot;\n&quot;;
-    swappedCard = myHand.CheckForSet(*swappableCard);
-    outputWin(swappedCard);</p>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Checking for a set with length &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">SetLength</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">swappedCard</span> <span class="o">=</span> <span class="n">myHand</span><span class="p">.</span><span class="n">CheckForSet</span><span class="p">(</span><span class="o">*</span><span class="n">swappableCard</span><span class="p">);</span>
+    <span class="n">outputWin</span><span class="p">(</span><span class="n">swappedCard</span><span class="p">);</span>
 
-    RunLength = 4;
-    cout &lt;&lt; &quot;Checking for a run with length &quot; &lt;&lt; RunLength &lt;&lt; &quot;\n&quot;;
-    swappedCard = myHand.CheckForRun(*swappableCard);
-    outputWin(swappedCard);</p>
+    <span class="n">RunLength</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Checking for a run with length &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">RunLength</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">swappedCard</span> <span class="o">=</span> <span class="n">myHand</span><span class="p">.</span><span class="n">CheckForRun</span><span class="p">(</span><span class="o">*</span><span class="n">swappableCard</span><span class="p">);</span>
+    <span class="n">outputWin</span><span class="p">(</span><span class="n">swappedCard</span><span class="p">);</span>
 
-    SetLength = 4;
-    cout &lt;&lt; &quot;Checking for a set with length &quot; &lt;&lt; SetLength &lt;&lt; &quot;\n&quot;;
-    swappedCard = myHand.CheckForSet(*swappableCard);
-    outputWin(swappedCard);</p>
+    <span class="n">SetLength</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Checking for a set with length &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">SetLength</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">swappedCard</span> <span class="o">=</span> <span class="n">myHand</span><span class="p">.</span><span class="n">CheckForSet</span><span class="p">(</span><span class="o">*</span><span class="n">swappableCard</span><span class="p">);</span>
+    <span class="n">outputWin</span><span class="p">(</span><span class="n">swappedCard</span><span class="p">);</span>
 
-    //Clean up
-    delete swappableCard;
-    myHand.cleanUp();</p>
+    <span class="c1">//Clean up</span>
+    <span class="k">delete</span> <span class="n">swappableCard</span><span class="p">;</span>
+    <span class="n">myHand</span><span class="p">.</span><span class="n">cleanUp</span><span class="p">();</span>
 
-    return 0;
-}
-[/code]</p>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 
-Here's a sample of an input and output:</p>
+<p>Here’s a sample of an input and output:</p>
 <pre>What is the initial hand?: Two of Diamonds, Three of Diamonds, Four of Diamonds, Seven of Diamonds, Seven of Clubs, Seven of Hearts, Jack of Hearts
 What is the added hand?: Five of Diamonds
 Checking for a run with length 3
@@ -401,16 +399,16 @@ Checking for a set with length 4
 No possible winning hand.
 </pre>
 
-<span style="text-decoration:underline;"><strong>A brief explanation on the two checker methods</strong></span></p>
+<p><span style="text-decoration:underline;"><strong>A brief explanation on the two checker methods</strong></span></p>
 
-<em>Set Checker:</em>
-Simply go through the hand and count the number of cards with the same value as the new card. If it exceeds 3 of 4, then you have a set. Then just go through the hand once more and swap with the first card that isn't the same value as the new card.</p>
+<p><em>Set Checker:</em>
+Simply go through the hand and count the number of cards with the same value as the new card. If it exceeds 3 of 4, then you have a set. Then just go through the hand once more and swap with the first card that isn’t the same value as the new card.</p>
 
-<em>Run Checker:
-</em>This code is significantly more messy. Let's see. Go through each card in the (sorted) hand until you get to the same suit as the new card. (Aside: the sort method that I've implemented, sorts the hands in terms of values grouped with their individual suits). Then, depending on if we're checking for a 3 card or 4 card run, we create a temporary second set called a Run (which is essentially a vector of cards).
-We insert the new card in, and then insert the next 2 to 3 cards in depending on the length of the run we're interested in. When we're doing this, and we encounter a card with a different suit than our new card, we know that a run isn't possible since we've hit a new suit in a sorted hand, so break out of the function. If we are successful in adding the right number of cards, we sort this mini hand. Then we subtract the largest value from the smallest value, and the result should be the length of the run we are interested in minus 1. So for instance, if we are interested in a run of 4 cards, and we have 3, 4, 5, 6 of the same suit, then 6 - 3 would give us 3. Now if this is the case, then we have successfully found a run!
+<p><em>Run Checker:
+</em>This code is significantly more messy. Let’s see. Go through each card in the (sorted) hand until you get to the same suit as the new card. (Aside: the sort method that I’ve implemented, sorts the hands in terms of values grouped with their individual suits). Then, depending on if we’re checking for a 3 card or 4 card run, we create a temporary second set called a Run (which is essentially a vector of cards).
+We insert the new card in, and then insert the next 2 to 3 cards in depending on the length of the run we’re interested in. When we’re doing this, and we encounter a card with a different suit than our new card, we know that a run isn’t possible since we’ve hit a new suit in a sorted hand, so break out of the function. If we are successful in adding the right number of cards, we sort this mini hand. Then we subtract the largest value from the smallest value, and the result should be the length of the run we are interested in minus 1. So for instance, if we are interested in a run of 4 cards, and we have 3, 4, 5, 6 of the same suit, then 6 - 3 would give us 3. Now if this is the case, then we have successfully found a run!
 To find a card we can remove from the hand, I use the brute force method. Which means going through the hand once again and as soon as I hit a card which is not in the mini-hand, I can discard that card.
-<em>Clearly this method can be improved upon....</em></p>
+<em>Clearly this method can be improved upon….</em></p>
 
   </article>
   <div id="disqus_thread"></div>
@@ -427,7 +425,6 @@ To find a card we can remove from the hand, I use the brute force method. Which 
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
 </div>
       </div>
     </div>
@@ -495,20 +492,16 @@ To find a card we can remove from the hand, I use the brute force method. Which 
 </footer>
 
     <script type="text/javascript">
-  var disqus_shortname  = 'codebagelsandgibberish',
-      disqus_identifier = '2014-07-14-simple-rummychecker.html',
-      disqus_url        = 'http://yourdomain.com/c++/2014/07/14/simple-rummychecker/'
-  ;
-  (function() {
-    var load = function(src){
-      var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = src;
-      var e = document.getElementsByTagName('script')[0]; e.parentNode.insertBefore(s, e);
-    };
-    load('//' + disqus_shortname + '.disqus.com/count.js');
-    if (document.getElementById('disqus_thread')) {
-      load('//' + disqus_shortname + '.disqus.com/embed.js');
-    }
-  })();
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+var disqus_shortname = 'codebagelsandgibberish'; // required: replace example with your forum shortname
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function () {
+var s = document.createElement('script'); s.async = true;
+s.type = 'text/javascript';
+s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
 </script>
     </body>
 </html>

@@ -6,13 +6,13 @@ categories:
 tags:
 - C++
 ---
-<p>There aren't a whole lot of differences between Vectors and Arrays internally (i.e. in terms of performance). Vectors use an array structure internally but have additional functions to manage it. Some advantages of a vector are as follows:</p>
+<p>There aren't a whole lot of differences between Vectors and Arrays internally (i.e. in terms of performance). Vectors use an array structure internally but have additional functions to manage it. <!--more-->Some advantages of a vector are as follows:
 <ul>
 <li>You can dynamically allocate vectors without knowing the exact size at the time of conception. This means that handling vectors will be safer in the long run. You need not be extra careful to exceed the boundaries of a vector. Vectors require more space however. If you want to add to a vector, and the vector is at capacity, it will double its capacity and copy all the contents. This will increase memory usage but improve flexibility</li>
 <li>Vectors have additional functionality such as <code>size</code> and <code>capacity</code> which are very useful.</li>
 <li>Here is a great <a href="http://stackoverflow.com/questions/6462985/c-stl-vector-vs-array-in-the-real-world">response</a> I found on StackOverflow to this:
-<blockquote><p>One of the best reasons to use a vector as opposed to an array is the RAII idiom. Basically, in order for c++ code to be exception-safe, any dynamically allocated memory or other resources should be encapsulated within objects. These objects should have destructors that free these resources.</p>
-<p>When an exception goes unhandled, the ONLY things that are gaurenteed to be called are the destructors of objects on the stack. If you dynamically allocate memory outside of an object, and an uncaught exception is thrown somewhere before it is deleted, you have a memory leak.</p>
-<p>It's also a nice way to avoid having to remember to use delete.</p></blockquote>
+<blockquote><p>One of the best reasons to use a vector as opposed to an array is the RAII idiom. Basically, in order for c++ code to be exception-safe, any dynamically allocated memory or other resources should be encapsulated within objects. These objects should have destructors that free these resources.
+<p>When an exception goes unhandled, the ONLY things that are gaurenteed to be called are the destructors of objects on the stack. If you dynamically allocate memory outside of an object, and an uncaught exception is thrown somewhere before it is deleted, you have a memory leak.
+<p>It's also a nice way to avoid having to remember to use delete.</blockquote>
 </li>
 </ul>
