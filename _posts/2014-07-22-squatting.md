@@ -12,7 +12,8 @@ I've been doing the <a href="http://stronglifts.com/5x5/" target="_blank">SL 5x5
 <!--more-->
 
 I've struggled with getting my squats perfect and often feel like I'm straining my lower back when performing them, which can be very dangerous in the long run. That being said, today I found a really great video that shows how to do lower bar squats safely.
-[youtube https://www.youtube.com/watch?v=RMFHgVN_pcg&w=560&h=315]
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/RMFHgVN_pcg" frameborder="0" allowfullscreen></iframe>
 
 As of today, my weights are as follows (all 5 rep in lbs):
 Squats: 155
