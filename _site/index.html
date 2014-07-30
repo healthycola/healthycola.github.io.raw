@@ -62,8 +62,8 @@
       <li>
         <span class="post-date">Jul 30, 2014</span>
         <a class="post-link" href="/jekyll/update/2014/07/30/welcome-to-jekyll/">Welcome to Jekyll!</a><br>
-        You’ll find this post in your <code>_posts</code> directory - edit this post and re-build (or run with the <code>-w</code> switch) to see your changes!
-To add new posts, simply add a file in the <code>_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.
+        <p>You’ll find this post in your <code>_posts</code> directory - edit this post and re-build (or run with the <code>-w</code> switch) to see your changes!
+To add new posts, simply add a file in the <code>_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</p>
 
 
       </li>
@@ -71,217 +71,7 @@ To add new posts, simply add a file in the <code>_posts</code> directory that fo
       <li>
         <span class="post-date">Jul 24, 2014</span>
         <a class="post-link" href="/c++/2014/07/24/huffman-encoding-implementation/">Huffman Encoding Implementation</a><br>
-        There was a fun little challenge on Reddit that I decided to partake in. I’m going to copy the challenge from <a href="http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/&quot; target=&quot;_blank&quot;">there</a> for completion.
-
-<blockquote>
-  It is 2114. We have colonized the Galaxy. To communicate we send 140 character max messages using [A-Z0-9 ]. The technology to do this requires faster than light pulses to beam the messages to relay stations.
-Your challenge is to implement the compression for these messages. The design is very open and the solutions will vary.
-Your goals:
-&gt; Compact 140 Bytes down to a stream of bits to send and then decompact the message and verify 100% data contained.
-&gt; The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.
-</blockquote>
-
-I decided to take this as an excuse to implement the <a href="http://en.wikipedia.org/wiki/Huffman_coding" target="_blank">Huffman Encoding</a> technique that we learned about in school. 
-
-This was the first time I had a chance to work with the map data structure in C++, so that was fun. Essentially, what I did was supply the program with a sample text from which it could extract frequency data of each of the characters. I realized after that I could have just wiki’d this, since frequency data for letters is <a href="http://en.wikipedia.org/wiki/Letter_frequency" target="_blank">available</a> online. Ah well…
-<!--more-->
-
-Once I generated the frequency list, I went ahead and created the tree using nodes. Each node contain a few things - frequency of that particular character (or parent), the value of the character if it was a leaf node, and the pointers to the left and right nodes (null upon initialization, and it remains null if they are leaf nodes).
-
-[code language=”cpp”]
-void generateTree()
-    {
-        vector&lt;HuffEncNode<em>&gt; TreeNodes;
-        for (map&lt;char, int&gt;::iterator it = frequencyChart.begin(); it != frequencyChart.end(); it++)
-        {
-            HuffEncNode</em> leafNode = new HuffEncNode((it)-&gt;first, (it)-&gt;second);
-            TreeNodes.push_back(leafNode);
-        }
-        sort(TreeNodes.begin(), TreeNodes.end(), HuffEncNode::compare);
-        while (TreeNodes.size() &gt; 1)
-        {
-            //Pop last two elements
-            HuffEncNode* RightNode = TreeNodes.back();
-            TreeNodes.pop_back();
-            HuffEncNode* LeftNode = TreeNodes.back();
-            TreeNodes.pop_back();
-
-<pre><code>        HuffEncNode* parentNode = new HuffEncNode(RightNode-&amp;gt;frequency + LeftNode-&amp;gt;frequency, LeftNode, RightNode);
-        TreeNodes.push_back(parentNode);
-        sort(TreeNodes.begin(), TreeNodes.end(), HuffEncNode::compare);
-    }
-    parentNode = TreeNodes.front();
-
-
-    //Generate the encoding map
-    parentNode-&amp;gt;generateCodes(&amp;quot;&amp;quot;, &amp;amp;encodedMap);
-} [/code]
-</code></pre>
-
-The algorithm itself is described on the wikipedia page for Huffman encoding. The last bit of the code which says Generate the encoding map, essentially traverses down the tree and saves the codes for each character in a map for easier access during the encoding process. 
-
-During the decoding process, the program would simply traverse down the tree based on the bit (1 or 0) until it hit a character. That’s the beauty of Huffman Encoding.
-
-[code language=”cpp”]
-char deCode(string input, int* characterLocation)
-        {
-            if (leftNode == NULL &amp;&amp; rightNode == NULL)
-            {
-                //leaf node
-                return ASCIIVal;
-            }
-
-<pre><code>        if (input[*characterLocation] == '0')
-        {
-            //go into the right node
-            (*characterLocation)++;
-            return rightNode-&amp;gt;deCode(input, characterLocation);
-        }
-        else
-        {
-            //go into the left node
-            (*characterLocation)++;
-            return leftNode-&amp;gt;deCode(input, characterLocation);
-        }
-    } [/code]
-</code></pre>
-
-The sample that the challenge wanted us to use was as follows:
-
-<ol>
-<li>REMEMBER TO DRINK YOUR OVALTINE</li>
-<li>GIANTS BEAT DODGERS 10 TO 9 AND PLAY TOMORROW AT 1300</li>
-<li>SPACE THE FINAL FRONTIER THESE ARE THE VOYAGES OF THE BIT STREAM DAILY PROGRAMMER TO SEEK OUT NEW COMPRESSION</li>
-</ol>
-
-Using the test set above to train the Huffman encoding would defeat the purpose of the challenge, but I figured it would be a good benchmark to use. So developing the encoding tree with the test set above resulted in this:
-
-<pre>
-<em><strong>The coding is as follows:</strong></em>
-  - 11
-0 - 101010
-1 - 0001011
-2 - 00011111111111110
-3 - 000111110
-4 - 000111111111110
-5 - 00011111111110
-6 - 000111111110
-7 - 00011111110
-8 - 0001111110
-9 - 00011110
-A - 0110
-B - 011110
-C - 101011
-D - 10100
-E - 100
-F - 011111
-G - 000011
-H - 000010
-I - 01001
-J - 0001111111110
-K - 0001010
-L - 000000
-M - 01110
-N - 01000
-O - 0011
-P - 000001
-Q - 0001111111111110
-R - 0101
-S - 1011
-T - 0010
-U - 0001000
-V - 0001001
-W - 0001110
-X - 000111111111111110
-Y - 000110
-Z - 000111111111111111
-
-<em><strong>Results are as follows:</strong></em>
-Read Message of 31 Bytes.
-Compressing 248 Bits into 134 Bits. (45.9677% compression)
-Sending Message
-Decompressing Message into 31 Bytes.
-Message Matches!
-
-Read Message of 53 Bytes.
-Compressing 424 Bits into 233 Bits. (45.0472% compression)
-Sending Message
-Decompressing Message into 53 Bytes.
-Message Matches!
-
-Read Message of 109 Bytes.
-Compressing 872 Bits into 449 Bits. (48.5092% compression)
-Sending Message
-Decompressing Message into 109 Bytes.
-Message Matches!
-Program ended with exit code: 0
-</pre>
-
-Training the Huffman Tree with an ebook I found on <a href="http://gutenberg.org" target="_blank">Project Gutenberg</a> worked fairly well for me. Here are the results:
-
-<pre>
-<em><strong>The coding is as follows:</strong></em>
-  - 000
-0 - 111010101
-1 - 11101011
-2 - 111010001
-3 - 111010100
-4 - 0100011101
-5 - 0100011111
-6 - 1110100111
-7 - 1110100100
-8 - 1110100101
-9 - 01000111000
-A - 0101
-B - 100111
-C - 10010
-D - 11100
-E - 110
-F - 001101
-G - 010000
-H - 1111
-I - 0111
-J - 0100011110
-K - 01000110
-L - 01001
-M - 001111
-N - 1000
-O - 0110
-P - 001110
-Q - 1110100110
-R - 1011
-S - 1010
-T - 0010
-U - 001100
-V - 0100010
-W - 100110
-X - 111010000
-Y - 111011
-Z - 01000111001
-
-<em><strong>Results are as follows:</strong></em>
-Read Message of 31 Bytes.
-Compressing 248 Bits into 135 Bits. (45.5645% compression)
-Sending Message
-Decompressing Message into 31 Bytes.
-Message Matches!
-
-Read Message of 53 Bytes.
-Compressing 424 Bits into 253 Bits. (40.3302% compression)
-Sending Message
-Decompressing Message into 53 Bytes.
-Message Matches!
-
-Read Message of 109 Bytes.
-Compressing 872 Bits into 449 Bits. (48.5092% compression)
-Sending Message
-Decompressing Message into 109 Bytes.
-Message Matches!
-</pre>
-
-Not bad! The bench mark gives 46%, 45% and 48.5%. On the other side, I get compression rates of 45.6%, 40.33% and 48.5%. Not bad! Seems like the main issue with the ebook text I used was with the numbers. 
-
-Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project files up. <del datetime="2014-07-24T21:09:48+00:00">I’ll do that later</del>. <ins datetime="2014-07-24T21:09:48+00:00"><a href="https://github.com/healthycola/HuffmanEncode" target="_blank">They’re up now</a>.</ins>
+        <p>There was a fun little challenge on Reddit that I decided to partake in. I’m going to copy the challenge from <a href="http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/&quot; target=&quot;_blank&quot;">there</a> for completion.</p>
 
 
       </li>
@@ -289,7 +79,20 @@ Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project fi
       <li>
         <span class="post-date">Jul 22, 2014</span>
         <a class="post-link" href="/fitness/powerlifting/weightlifting/2014/07/22/squatting/">Squatting!</a><br>
-        I've been doing the <a href="http://stronglifts.com/5x5/" target="_blank">SL 5x5</a> for a few weeks now and I'm really enjoying it (especially since it's Ramadan right now). 
+        I've been doing the <a href="http://stronglifts.com/5x5/" target="_blank">SL 5x5</a> for a few weeks now and I'm really enjoying it (especially since it's Ramadan right now). </p>
+
+I've struggled with getting my squats perfect and often feel like I'm straining my lower back when performing them, which can be very dangerous in the long run. That being said, today I found a really great video that shows how to do lower bar squats safely.
+[youtube https://www.youtube.com/watch?v=RMFHgVN_pcg&amp;w=560&amp;h=315]</p>
+
+As of today, my weights are as follows (all 5 rep in lbs):
+Squats: 155
+Bench: 155
+Barbell Row: 115
+Overhead Press: 80
+DeadLift: 125</p>
+
+I've been feeling stronger too, so I really hope this regime is a good path for me.</p>
+
 
 
       </li>
@@ -297,7 +100,14 @@ Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project fi
       <li>
         <span class="post-date">Jul 22, 2014</span>
         <a class="post-link" href="/c++/trie/2014/07/22/autocomplete-word-predictor-simple-trie/">Autocomplete / Word Predictor / Simple Trie</a><br>
-        Decided to code up a Simple Trie for kicks. The code is still in the works, but can be accessed on git <a href="https://github.com/healthycola/SimpleWordPredictor/" target="_blank">here</a>.
+        Decided to code up a Simple Trie for kicks. The code is still in the works, but can be accessed on git <a href="https://github.com/healthycola/SimpleWordPredictor/" target="_blank">here</a>.</p>
+
+I had never coded something of nature before, so this was a fun exercise in recursion. A description of a Trie was on <a href="http://en.wikipedia.org/wiki/Trie" target="_blank">wiki</a>, but I found the description described in <a href="http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/Trie/" target="_blank">this</a> site more comprehensible.</p>
+<blockquote>
+A trie (from retrieval), is a multi-way tree structure useful for storing strings over an alphabet. It has been used to store large dictionaries of English (say) words in spelling-checking programs and in natural-language "understanding" programs.</p>
+</blockquote>
+
+
 
 
       </li>
@@ -305,7 +115,19 @@ Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project fi
       <li>
         <span class="post-date">Jul 16, 2014</span>
         <a class="post-link" href="/c++/2014/07/16/2d-matrix-rotator/">2D Matrix Rotator</a><br>
-        Simple challenge was <a href="http://www.reddit.com/r/dailyprogrammer/comments/29i9jw/6302014_challenge_169_easy_90_degree_2d_array/">posted</a> up on reddit.
+        Simple challenge was <a href="http://www.reddit.com/r/dailyprogrammer/comments/29i9jw/6302014_challenge_169_easy_90_degree_2d_array/">posted</a> up on reddit.</p>
+
+There was a really simple solution to it which would perform the task with O(n<sup>2</sup>) space and O(n<sup>2</sup>) time. It would involve creating a new array with the same dimensions as the original matrix, and copying the values into their new spots.</p>
+
+I wanted to do better than this solution and thought of an onion-method to do it. It would include starting with the outside layer of the matrix, and switching the numbers with their new spots for the four sides. For instance, if the following was the matrix:
+<code>
+|  1  |  2  |  3  |  4  |
+|  5  |  6  |  7  |  8  |
+|  9  |  10 |  11 |  12 |
+|  13 |  14 |  15 |  16 |
+</code>
+In the first layer, for the first iteration, 1 would move to 4s position, 4 would move to 16, 16 would move to 13s position, and 13 would move to 1s position. Iterating through all n - 1 numbers of the layer, (i.e. 1 to 3), the outer layer would have been rotated. Moving down inwards in similar fashion will have switched the entire matrix.
+
 
 
       </li>
@@ -313,7 +135,21 @@ Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project fi
       <li>
         <span class="post-date">Jul 14, 2014</span>
         <a class="post-link" href="/c++/2014/07/14/simple-rummychecker/">Simple RummyChecker</a><br>
-        This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).
+        This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).</p>
+
+Major things I'm happy about:</p>
+<ul>
+<li>Simple tokenizer - It's just good to have this code. I think it's reusable.</li>
+<li>Decent organization - A Card class and a Hand class was created. I think the organization is decent, not amazing, but it's getting there.</li>
+</ul>
+
+Areas I need to improve on:</p>
+<ul>
+<li>Rummy Run Detector - At the moment it's really brute-forcy. Gotta think of a better idea to go about it.</li>
+<li>Separation - Could use better separation between input and output areas of the program, just for good coding practice.</li>
+</ul>
+
+
 
 
       </li>
@@ -321,7 +157,16 @@ Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project fi
       <li>
         <span class="post-date">Jul 12, 2014</span>
         <a class="post-link" href="/c++/2014/07/12/11/">Simple BlackJackChecker</a><br>
-        Wanted to add something very quick before heading to bed. I'm going to edit this post when I wake up. Here's my first take on <a href="http://www.reddit.com/r/dailyprogrammer/comments/29zut0/772014_challenge_170_easy_blackjack_checker/" title="Reddit's simple blackjack checker">Reddit's simple blackjack checker</a>. Seems to work, and I think it's fairly elegant, tbh, but I'll have a better look when it's not 6 in the morning :).
+        Wanted to add something very quick before heading to bed. I'm going to edit this post when I wake up. Here's my first take on <a href="http://www.reddit.com/r/dailyprogrammer/comments/29zut0/772014_challenge_170_easy_blackjack_checker/" title="Reddit's simple blackjack checker">Reddit's simple blackjack checker</a>. Seems to work, and I think it's fairly elegant, tbh, but I'll have a better look when it's not 6 in the morning :).</p>
+
+Edit: I was reading the code again today. Some of the things I would change are:</p>
+<ul>
+<li>Spit the work into input phase and output phase. In input phase, simply store the strings. I feel like that's probably good programming practice.</li>
+<li>Reduce the number of lines in main, although there are that many. Split the different areas into functions.</li>
+<li>Add more objected orientedness to make this more tidy. It's a little bit messy right now.</li>
+</ul>
+
+
 
 
       </li>
@@ -329,14 +174,14 @@ Anyway, I’m gonna head to sleep, but that was fun! Gotta refine the project fi
       <li>
         <span class="post-date">Jul 11, 2014</span>
         <a class="post-link" href="/c++/2014/07/11/vector-vs-arrays/">Vector vs. Arrays</a><br>
-        There aren't a whole lot of differences between Vectors and Arrays internally (i.e. in terms of performance). Vectors use an array structure internally but have additional functions to manage it. Some advantages of a vector are as follows:
+        <p>There aren't a whole lot of differences between Vectors and Arrays internally (i.e. in terms of performance). Vectors use an array structure internally but have additional functions to manage it. Some advantages of a vector are as follows:</p>
 <ul>
 <li>You can dynamically allocate vectors without knowing the exact size at the time of conception. This means that handling vectors will be safer in the long run. You need not be extra careful to exceed the boundaries of a vector. Vectors require more space however. If you want to add to a vector, and the vector is at capacity, it will double its capacity and copy all the contents. This will increase memory usage but improve flexibility</li>
 <li>Vectors have additional functionality such as <code>size</code> and <code>capacity</code> which are very useful.</li>
 <li>Here is a great <a href="http://stackoverflow.com/questions/6462985/c-stl-vector-vs-array-in-the-real-world">response</a> I found on StackOverflow to this:
-<blockquote>One of the best reasons to use a vector as opposed to an array is the RAII idiom. Basically, in order for c++ code to be exception-safe, any dynamically allocated memory or other resources should be encapsulated within objects. These objects should have destructors that free these resources.
-When an exception goes unhandled, the ONLY things that are gaurenteed to be called are the destructors of objects on the stack. If you dynamically allocate memory outside of an object, and an uncaught exception is thrown somewhere before it is deleted, you have a memory leak.
-It's also a nice way to avoid having to remember to use delete.</blockquote>
+<blockquote><p>One of the best reasons to use a vector as opposed to an array is the RAII idiom. Basically, in order for c++ code to be exception-safe, any dynamically allocated memory or other resources should be encapsulated within objects. These objects should have destructors that free these resources.</p>
+<p>When an exception goes unhandled, the ONLY things that are gaurenteed to be called are the destructors of objects on the stack. If you dynamically allocate memory outside of an object, and an uncaught exception is thrown somewhere before it is deleted, you have a memory leak.</p>
+<p>It's also a nice way to avoid having to remember to use delete.</p></blockquote>
 </li>
 </ul>
 
@@ -347,8 +192,7 @@ It's also a nice way to avoid having to remember to use delete.</blockquote>
       <li>
         <span class="post-date">Jul 11, 2014</span>
         <a class="post-link" href="/c++/2014/07/11/challenge-1-accepting-console-input/">Challenge 1: Accepting console input</a><br>
-        Lets read in strings. we will give n the number of strings then the strings.
-<blockquote>
+        <p>Lets read in strings. we will give n the number of strings then the strings.</p>
 
 
       </li>

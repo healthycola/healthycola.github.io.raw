@@ -6,21 +6,18 @@ categories:
 tags:
 - C++
 - practice
-
 ---
 
 
 Lets read in strings. we will give n the number of strings then the strings.
-<blockquote>
-
+<!--more-->
 Example:
-<code>5
+`5
 Huey
 Dewey
 Louie
 Donald
-Scrooge</code>
-</blockquote>
+Scrooge`
 
 
 Seemed like a fairly simple first challenge on my road to recovery back to C++. Here is my first attempt:

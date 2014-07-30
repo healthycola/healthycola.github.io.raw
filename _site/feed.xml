@@ -5,14 +5,15 @@
     <description>A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!</description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 30 Jul 2014 15:38:35 -0400</pubDate>
-    <lastBuildDate>Wed, 30 Jul 2014 15:38:35 -0400</lastBuildDate>
+    <pubDate>Wed, 30 Jul 2014 16:38:36 -0400</pubDate>
+    <lastBuildDate>Wed, 30 Jul 2014 16:38:36 -0400</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
         <title>Welcome to Jekyll!</title>
         <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory - edit this post and re-build (or run with the &lt;code&gt;-w&lt;/code&gt; switch) to see your changes!
-To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.&lt;/p&gt;
+To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention: YYYY-MM-DD-name-of-post.ext.
+&lt;!--more--&gt;&lt;/p&gt;
 
 &lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
 
@@ -38,14 +39,24 @@ To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; direc
     
       <item>
         <title>Huffman Encoding Implementation</title>
-        <description>&lt;p&gt;There was a fun little challenge on Reddit that I decided to partake in. I’m going to copy the challenge from &lt;a href=&quot;http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/&amp;quot; target=&amp;quot;_blank&amp;quot;&quot;&gt;there&lt;/a&gt; for completion.&lt;/p&gt;
+        <description>&lt;p&gt;There was a fun little challenge on Reddit that I decided to partake in. I’m going to copy the challenge from &lt;a href=&quot;http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/&amp;quot; target=&amp;quot;_blank&amp;quot;&quot;&gt;there&lt;/a&gt; for completion.
+&lt;!--more--&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;It is 2114. We have colonized the Galaxy. To communicate we send 140 character max messages using [A-Z0-9 ]. The technology to do this requires faster than light pulses to beam the messages to relay stations.
-Your challenge is to implement the compression for these messages. The design is very open and the solutions will vary.
-Your goals:
-&amp;gt; Compact 140 Bytes down to a stream of bits to send and then decompact the message and verify 100% data contained.
-&amp;gt; The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.&lt;/p&gt;
+  &lt;p&gt;It is 2114. We have colonized the Galaxy. To communicate we send 140 character max messages using [A-Z0-9 ]. The technology to do this requires faster than light pulses to beam the messages to relay stations.&lt;/p&gt;
+
+  &lt;p&gt;Your challenge is to implement the compression for these messages. The design is very open and the solutions will vary.&lt;/p&gt;
+
+  &lt;p&gt;Your goals:&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;p&gt;Compact 140 Bytes down to a stream of bits to send and then decompact the message and verify 100% data contained.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;I decided to take this as an excuse to implement the &lt;a href=&quot;http://en.wikipedia.org/wiki/Huffman_coding&quot; target=&quot;_blank&quot;&gt;Huffman Encoding&lt;/a&gt; technique that we learned about in school. &lt;/p&gt;
@@ -1225,20 +1236,18 @@ int main(int argc, const char** argv)
     
       <item>
         <title>Challenge 1: Accepting console input</title>
-        <description>Lets read in strings. we will give n the number of strings then the strings.
-&lt;blockquote&gt;
-
+        <description>&lt;p&gt;Lets read in strings. we will give n the number of strings then the strings.
+&lt;!--more--&gt;
 Example:
 &lt;code&gt;5
 Huey
 Dewey
 Louie
 Donald
-Scrooge&lt;/code&gt;
-&lt;/blockquote&gt;
+Scrooge&lt;/code&gt;&lt;/p&gt;
 
+&lt;p&gt;Seemed like a fairly simple first challenge on my road to recovery back to C++. Here is my first attempt:&lt;/p&gt;
 
-Seemed like a fairly simple first challenge on my road to recovery back to C++. Here is my first attempt:
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
@@ -1256,7 +1265,7 @@ Seemed like a fairly simple first challenge on my road to recovery back to C++. 
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-Although this is okay, especially for the example in question, it is not really the best solution. First of all it uses arrays, which are looked down upon for scalability. Secondly, I need to remember to delete the array to prevent memory leaks. Second of all, &lt;code&gt;cin&lt;/code&gt; considers spaces as end of lines, which is not good for more complex phrases such as:
+&lt;p&gt;Although this is okay, especially for the example in question, it is not really the best solution. First of all it uses arrays, which are looked down upon for scalability. Secondly, I need to remember to delete the array to prevent memory leaks. Second of all, &lt;code&gt;cin&lt;/code&gt; considers spaces as end of lines, which is not good for more complex phrases such as:&lt;/p&gt;
 
 &lt;blockquote&gt;
 
@@ -1265,8 +1274,8 @@ I&#39;m fine thanks!
 And yourself?&lt;/code&gt;
 &lt;/blockquote&gt;
 
+&lt;p&gt;Here is a more revised version of the same program:&lt;/p&gt;
 
-Here is a more revised version of the same program:
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c--&quot; data-lang=&quot;c++&quot;&gt;&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;#include &amp;lt;vector&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -1291,7 +1300,8 @@ Here is a more revised version of the same program:
    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
    
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-The main changes include the usage of vectors which are more scalable and the use of getline to get the strings which include spaces and such. This solution seems more elegant.
+
+&lt;p&gt;The main changes include the usage of vectors which are more scalable and the use of getline to get the strings which include spaces and such. This solution seems more elegant.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 11 Jul 2014 00:00:00 -0400</pubDate>

@@ -11,12 +11,17 @@ tags:
 ---
 
 There was a fun little challenge on Reddit that I decided to partake in. I'm going to copy the challenge from [there](http://www.reddit.com/r/dailyprogrammer/comments/2b21mp/7182014_challenge_171_hard_intergalatic_bitstream/" target="_blank") for completion.
+<!--more-->
 
 > It is 2114. We have colonized the Galaxy. To communicate we send 140 character max messages using [A-Z0-9 ]. The technology to do this requires faster than light pulses to beam the messages to relay stations.
+>
 > Your challenge is to implement the compression for these messages. The design is very open and the solutions will vary.
+>
 > Your goals:
-> > Compact 140 Bytes down to a stream of bits to send and then decompact the message and verify 100% data contained.
-> > The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.
+>
+> * Compact 140 Bytes down to a stream of bits to send and then decompact the message and verify 100% data contained.
+>
+> * The goal is bit reduction. 140 bytes or less at 8 bits per byte so thats 1120 bits max. If you take a message of 140 bytes and compress it to 900 bits you have 220 less bits for 20% reduction.
 
 
 I decided to take this as an excuse to implement the <a href="http://en.wikipedia.org/wiki/Huffman_coding" target="_blank">Huffman Encoding</a> technique that we learned about in school. 
