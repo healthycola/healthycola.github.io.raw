@@ -158,5 +158,21 @@ To add new posts, simply add a file in the <code>_posts</code> directory that fo
 
 </footer>
 
+    <script type="text/javascript">
+  var disqus_shortname  = 'codebagelsandgibberish',
+      disqus_identifier = '2014-07-30-welcome-to-jekyll.markdown',
+      disqus_url        = 'http://yourdomain.com/jekyll/update/2014/07/30/welcome-to-jekyll/'
+  ;
+  (function() {
+    var load = function(src){
+      var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = src;
+      var e = document.getElementsByTagName('script')[0]; e.parentNode.insertBefore(s, e);
+    };
+    load('//' + disqus_shortname + '.disqus.com/count.js');
+    if (document.getElementById('disqus_thread')) {
+      load('//' + disqus_shortname + '.disqus.com/embed.js');
+    }
+  })();
+</script>
     </body>
 </html>
