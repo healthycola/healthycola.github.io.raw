@@ -115,10 +115,10 @@ int main(int argc, char** argv)
 }
 {% endhighlight %}
 
-Looking at the code above, the main loop runs for <code>N/2</code> times while the inner loop runs for <code>N - 2*N/2 + 1</code> times. Total time is then O(N/2*(N-N+1)) which is O(N). And the space requirement is O(1). I guess mission accomplished! :)
+Looking at the code above, the main loop runs for `N/2` times while the inner loop runs for `N - 2*N/2 + 1` times. Total time is then `O(N/2*(N-N+1))` which is `O(N)`. And the space requirement is O(1). I guess mission accomplished! :)
 
 Here is a sample of the output:
-<code>
+{% highlight %}
 N = 10
 What is the array?:
 1 2 3 4 5 6 7 8 9 0
@@ -186,4 +186,4 @@ y
 rotate? y/n: n
 
 Program exited with code 0.
-</code>
+{% endhighlight %}
