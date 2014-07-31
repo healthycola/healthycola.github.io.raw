@@ -1,0 +1,5 @@
+<ul class="categoryList">
+  {% for category in site.categories %}
+  	<li><a href="{% category_url category[0] %}">{{ category[0] }}</a></li>
+  {% endfor %}
+</ul>

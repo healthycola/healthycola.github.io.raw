@@ -31,7 +31,19 @@ a:visited { color: #205caa; }
   max-width: 800px;
   padding: 0 30px;
   margin: 0 auto;
+  margin-left: 23%;
   zoom: 1;
+}
+
+.navbar {
+  float: left;
+  width: 20%;
+  margin-left: 1%;
+  padding-right: 1%;
+  padding-left: 1%;
+  padding-bottom: 1%;
+  border-top: 5px solid #333;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 
@@ -146,6 +158,12 @@ a:visited { color: #205caa; }
 .page-content {
   padding: 30px 0;
   background-color: #fff;
+}
+
+
+.nav {
+  float:right;
+  width:30%;
 }
 
 
@@ -266,6 +284,38 @@ a:visited { color: #205caa; }
   border-radius: 3px;
 }
 
+
+/* Navigation Styles */
+/* ----------------------------------------------------------*/
+ul.categoryList {
+  padding-left: 10px;
+    list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+
+.categoryList li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+ 
+.categoryList li:last-child {
+  border: none;
+}
+ 
+.categoryList li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+}
+ 
+.categoryList li a:hover {
+  background: #f6f6f6;
+}
+
 .post pre.terminal code { background-color: #333; }
 
 /* Syntax highlighting styles */
@@ -371,6 +421,7 @@ a:visited { color: #205caa; }
     -moz-border-radius: 5px;
     border-radius: 5px;
     border: 1px solid #e8e8e8;
+    width: 50px;
   }
 
   .site-nav .menu-icon {

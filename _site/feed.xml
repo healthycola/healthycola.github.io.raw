@@ -5,8 +5,8 @@
     <description>A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!</description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 30 Jul 2014 19:42:52 -0400</pubDate>
-    <lastBuildDate>Wed, 30 Jul 2014 19:42:52 -0400</lastBuildDate>
+    <pubDate>Thu, 31 Jul 2014 18:05:52 -0400</pubDate>
+    <lastBuildDate>Thu, 31 Jul 2014 18:05:52 -0400</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -281,8 +281,9 @@ Message Matches!
         <description>&lt;p&gt;I’ve been doing the &lt;a href=&quot;http://stronglifts.com/5x5/&quot; target=&quot;_blank&quot;&gt;SL 5x5&lt;/a&gt; for a few weeks now and I’m really enjoying it (especially since it’s Ramadan right now). 
 &lt;!--more--&gt;&lt;/p&gt;
 
-&lt;p&gt;I’ve struggled with getting my squats perfect and often feel like I’m straining my lower back when performing them, which can be very dangerous in the long run. That being said, today I found a really great video that shows how to do lower bar squats safely.
-[youtube https://www.youtube.com/watch?v=RMFHgVN_pcg&amp;amp;w=560&amp;amp;h=315]&lt;/p&gt;
+&lt;p&gt;I’ve struggled with getting my squats perfect and often feel like I’m straining my lower back when performing them, which can be very dangerous in the long run. That being said, today I found a really great video that shows how to do lower bar squats safely.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/RMFHgVN_pcg&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 
 &lt;p&gt;As of today, my weights are as follows (all 5 rep in lbs):
 Squats: 155
@@ -439,14 +440,15 @@ A trie (from retrieval), is a multi-way tree structure useful for storing string
 &lt;p&gt;There was a really simple solution to it which would perform the task with O(n&lt;sup&gt;2&lt;/sup&gt;) space and O(n&lt;sup&gt;2&lt;/sup&gt;) time. It would involve creating a new array with the same dimensions as the original matrix, and copying the values into their new spots.
 &lt;!--more--&gt;&lt;/p&gt;
 
-&lt;p&gt;I wanted to do better than this solution and thought of an onion-method to do it. It would include starting with the outside layer of the matrix, and switching the numbers with their new spots for the four sides. For instance, if the following was the matrix:
-&lt;code&gt;
-|  1  |  2  |  3  |  4  |
+&lt;p&gt;I wanted to do better than this solution and thought of an onion-method to do it. It would include starting with the outside layer of the matrix, and switching the numbers with their new spots for the four sides. For instance, if the following was the matrix:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;|  1  |  2  |  3  |  4  |
 |  5  |  6  |  7  |  8  |
 |  9  |  10 |  11 |  12 |
 |  13 |  14 |  15 |  16 |
-&lt;/code&gt;
-In the first layer, for the first iteration, 1 would move to 4s position, 4 would move to 16, 16 would move to 13s position, and 13 would move to 1s position. Iterating through all n - 1 numbers of the layer, (i.e. 1 to 3), the outer layer would have been rotated. Moving down inwards in similar fashion will have switched the entire matrix.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the first layer, for the first iteration, 1 would move to 4s position, 4 would move to 16, 16 would move to 13s position, and 13 would move to 1s position. Iterating through all n - 1 numbers of the layer, (i.e. 1 to 3), the outer layer would have been rotated. Moving down inwards in similar fashion will have switched the entire matrix.
 &lt;!--more--&gt;&lt;/p&gt;
 
 &lt;p&gt;Let’s get to the code:&lt;/p&gt;
@@ -541,7 +543,7 @@ In the first layer, for the first iteration, 1 would move to 4s position, 4 woul
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Looking at the code above, the main loop runs for &lt;code&gt;N/2&lt;/code&gt; times while the inner loop runs for &lt;code&gt;N - 2*N/2 + 1&lt;/code&gt; times. Total time is then &lt;code&gt;O(N/2*(N-N+1))&lt;/code&gt; which is &lt;code&gt;O(N)&lt;/code&gt;. And the space requirement is O(1). I guess mission accomplished! :)&lt;/p&gt;
+&lt;p&gt;Looking at the code above, the main loop runs for &lt;code&gt;N/2&lt;/code&gt; times while the inner loop runs for &lt;code&gt;N - 2*N/2 + 1&lt;/code&gt; times. Total time is then &lt;code&gt;O(N/2*(N-N+1))&lt;/code&gt; which is &lt;code&gt;O(N)&lt;/code&gt;. And the space requirement is &lt;code&gt;O(1)&lt;/code&gt;. I guess mission accomplished! :)&lt;/p&gt;
 
 &lt;p&gt;Here is a sample of the output:&lt;/p&gt;
 
@@ -971,9 +973,11 @@ No possible winning hand.
 Simply go through the hand and count the number of cards with the same value as the new card. If it exceeds 3 of 4, then you have a set. Then just go through the hand once more and swap with the first card that isn’t the same value as the new card.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Run Checker:
-&lt;/em&gt;This code is significantly more messy. Let’s see. Go through each card in the (sorted) hand until you get to the same suit as the new card. (Aside: the sort method that I’ve implemented, sorts the hands in terms of values grouped with their individual suits). Then, depending on if we’re checking for a 3 card or 4 card run, we create a temporary second set called a Run (which is essentially a vector of cards).
-We insert the new card in, and then insert the next 2 to 3 cards in depending on the length of the run we’re interested in. When we’re doing this, and we encounter a card with a different suit than our new card, we know that a run isn’t possible since we’ve hit a new suit in a sorted hand, so break out of the function. If we are successful in adding the right number of cards, we sort this mini hand. Then we subtract the largest value from the smallest value, and the result should be the length of the run we are interested in minus 1. So for instance, if we are interested in a run of 4 cards, and we have 3, 4, 5, 6 of the same suit, then 6 - 3 would give us 3. Now if this is the case, then we have successfully found a run!
-To find a card we can remove from the hand, I use the brute force method. Which means going through the hand once again and as soon as I hit a card which is not in the mini-hand, I can discard that card.
+&lt;/em&gt;This code is significantly more messy. Let’s see. Go through each card in the (sorted) hand until you get to the same suit as the new card. (Aside: the sort method that I’ve implemented, sorts the hands in terms of values grouped with their individual suits). Then, depending on if we’re checking for a 3 card or 4 card run, we create a temporary second set called a Run (which is essentially a vector of cards).&lt;/p&gt;
+
+&lt;p&gt;We insert the new card in, and then insert the next 2 to 3 cards in depending on the length of the run we’re interested in. When we’re doing this, and we encounter a card with a different suit than our new card, we know that a run isn’t possible since we’ve hit a new suit in a sorted hand, so break out of the function. If we are successful in adding the right number of cards, we sort this mini hand. Then we subtract the largest value from the smallest value, and the result should be the length of the run we are interested in minus 1. So for instance, if we are interested in a run of 4 cards, and we have 3, 4, 5, 6 of the same suit, then 6 - 3 would give us 3. Now if this is the case, then we have successfully found a run!&lt;/p&gt;
+
+&lt;p&gt;To find a card we can remove from the hand, I use the brute force method. Which means going through the hand once again and as soon as I hit a card which is not in the mini-hand, I can discard that card.
 &lt;em&gt;Clearly this method can be improved upon….&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 14 Jul 2014 00:00:00 -0400</pubDate>

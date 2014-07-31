@@ -52,6 +52,26 @@
 
 
     <div class="page-content">
+      <div class="navbar">Navigation<p>
+        <ul class="categoryList">
+  
+  	<li><a href="/categories/c++">c++</a></li>
+  
+  	<li><a href="/categories/trie">trie</a></li>
+  
+  	<li><a href="/categories/fitness">fitness</a></li>
+  
+  	<li><a href="/categories/powerlifting">powerlifting</a></li>
+  
+  	<li><a href="/categories/weightlifting">weightlifting</a></li>
+  
+  	<li><a href="/categories/jekyll">jekyll</a></li>
+  
+  	<li><a href="/categories/update">update</a></li>
+  
+</ul>
+
+      </div>
       <div class="wrap">
       <div class="post">
 
@@ -66,14 +86,15 @@
 <p>There was a really simple solution to it which would perform the task with O(n<sup>2</sup>) space and O(n<sup>2</sup>) time. It would involve creating a new array with the same dimensions as the original matrix, and copying the values into their new spots.
 <!--more--></p>
 
-<p>I wanted to do better than this solution and thought of an onion-method to do it. It would include starting with the outside layer of the matrix, and switching the numbers with their new spots for the four sides. For instance, if the following was the matrix:
-<code>
-|  1  |  2  |  3  |  4  |
+<p>I wanted to do better than this solution and thought of an onion-method to do it. It would include starting with the outside layer of the matrix, and switching the numbers with their new spots for the four sides. For instance, if the following was the matrix:</p>
+
+<pre><code>|  1  |  2  |  3  |  4  |
 |  5  |  6  |  7  |  8  |
 |  9  |  10 |  11 |  12 |
 |  13 |  14 |  15 |  16 |
-</code>
-In the first layer, for the first iteration, 1 would move to 4s position, 4 would move to 16, 16 would move to 13s position, and 13 would move to 1s position. Iterating through all n - 1 numbers of the layer, (i.e. 1 to 3), the outer layer would have been rotated. Moving down inwards in similar fashion will have switched the entire matrix.
+</code></pre>
+
+<p>In the first layer, for the first iteration, 1 would move to 4s position, 4 would move to 16, 16 would move to 13s position, and 13 would move to 1s position. Iterating through all n - 1 numbers of the layer, (i.e. 1 to 3), the outer layer would have been rotated. Moving down inwards in similar fashion will have switched the entire matrix.
 <!--more--></p>
 
 <p>Let’s get to the code:</p>
@@ -168,7 +189,7 @@ In the first layer, for the first iteration, 1 would move to 4s position, 4 woul
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 
-<p>Looking at the code above, the main loop runs for <code>N/2</code> times while the inner loop runs for <code>N - 2*N/2 + 1</code> times. Total time is then <code>O(N/2*(N-N+1))</code> which is <code>O(N)</code>. And the space requirement is O(1). I guess mission accomplished! :)</p>
+<p>Looking at the code above, the main loop runs for <code>N/2</code> times while the inner loop runs for <code>N - 2*N/2 + 1</code> times. Total time is then <code>O(N/2*(N-N+1))</code> which is <code>O(N)</code>. And the space requirement is <code>O(1)</code>. I guess mission accomplished! :)</p>
 
 <p>Here is a sample of the output:</p>
 
