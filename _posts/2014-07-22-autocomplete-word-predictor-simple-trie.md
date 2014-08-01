@@ -3,7 +3,10 @@ layout: post
 title: Autocomplete / Word Predictor / Simple Trie
 categories:
 - C++
-tags: []
+tags:
+- C++
+- algorithm
+- Trie
 ---
 
 Decided to code up a Simple Trie for kicks. The code is still in the works, but can be accessed on git <a href="https://github.com/healthycola/SimpleWordPredictor/" target="_blank">here</a>.

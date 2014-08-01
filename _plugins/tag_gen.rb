@@ -54,14 +54,14 @@ module Jekyll
         if site.layouts.key? 'tag_index'
           dir = site.config['tag_dir'] || 'tags'
           site.tags.keys.each do |tag|
-            write_tag_index(site, File.join(dir, tag.gsub(/\s/, "-").gsub(/[^\w-+#]/, '').downcase), tag)
+            write_tag_index(site, File.join(dir, name_to_dir(tag).downcase), tag)
           end
         end
 
         if site.layouts.key? 'tag_feed'
           dir = site.config['tag_dir'] || 'tags'
           site.tags.keys.each do |tag|
-            write_tag_feed(site, File.join(dir, tag.gsub(/\s/, "-").gsub(/[^\w-+#]/, '').downcase), tag)
+            write_tag_feed(site, File.join(dir, name_to_dir(tag).downcase), tag)
           end
         end
 
@@ -129,7 +129,7 @@ module Jekyll
     # Returns string
     def tag_links(tags)
       tags = tags.sort!.map do |item|
-        '<a href="/tags/'+item.downcase+'/">'+item+'</a>'
+        '<a href="/tags/'+name_to_dir(item).downcase+'/">'+item+'</a>'
       end
       
       connector = "and"

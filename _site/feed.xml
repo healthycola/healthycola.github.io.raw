@@ -5,8 +5,8 @@
     <description>A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!</description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 01 Aug 2014 12:57:53 -0400</pubDate>
-    <lastBuildDate>Fri, 01 Aug 2014 12:57:53 -0400</lastBuildDate>
+    <pubDate>Fri, 01 Aug 2014 17:42:55 -0400</pubDate>
+    <lastBuildDate>Fri, 01 Aug 2014 17:42:55 -0400</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -298,6 +298,10 @@ DeadLift: 125&lt;/p&gt;
         <link>http://yourdomain.com/fitness/2014/07/22/squatting/</link>
         <guid isPermaLink="true">http://yourdomain.com/fitness/2014/07/22/squatting/</guid>
         
+        <category>health</category>
+        
+        <category>powerlifting</category>
+        
         
         <category>fitness</category>
         
@@ -421,6 +425,12 @@ A trie (from retrieval), is a multi-way tree structure useful for storing string
         <pubDate>Tue, 22 Jul 2014 00:00:00 -0400</pubDate>
         <link>http://yourdomain.com/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</link>
         <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</guid>
+        
+        <category>C++</category>
+        
+        <category>Trie</category>
+        
+        <category>algorithm</category>
         
         
         <category>c++</category>
@@ -979,6 +989,8 @@ Simply go through the hand and count the number of cards with the same value as 
         <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/14/simple-rummychecker/</guid>
         
         <category>C++</category>
+        
+        <category>Practice</category>
         
         
         <category>c++</category>

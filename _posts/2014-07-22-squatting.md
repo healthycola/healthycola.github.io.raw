@@ -3,7 +3,9 @@ layout: post
 title: Squatting!
 categories:
 - fitness
-tags: []
+tags:
+- powerlifting
+- health
 ---
 
 I've been doing the <a href="http://stronglifts.com/5x5/" target="_blank">SL 5x5</a> for a few weeks now and I'm really enjoying it (especially since it's Ramadan right now). 

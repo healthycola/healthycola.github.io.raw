@@ -5,6 +5,7 @@ categories:
 - C++
 tags:
 - C++
+- Practice
 ---
 
 This is a build up on the BlackJack Checker. The Rummy Checker challenge is also from Reddit and can be found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2a9u0a/792014_challenge_170_intermediate_rummy_checker/">here</a>. I think it's more organized than the blackjack checker and less hacky (except for the Run checker function - this function is soooo messy. I need to fix it, urgh).

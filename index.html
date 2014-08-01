@@ -9,9 +9,9 @@ layout: default
   <ul class="posts">
     {% for post in site.posts %}
       <li>
-        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }} • <a href="{{ post.url }}#disqus_thread"> data-disqus->View Comments</a></span>
         <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><br>
         {{ post.excerpt }}
+        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}{% if comments %} • <a href="{{ post.url }}#disqus_thread"> data-disqus->View Comments</a>{% endif %}</span>
       </li>
     {% endfor %}
   </ul>
