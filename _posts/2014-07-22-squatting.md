@@ -3,8 +3,6 @@ layout: post
 title: Squatting!
 categories:
 - fitness
-- powerlifting
-- weightlifting
 tags: []
 ---
 

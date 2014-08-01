@@ -5,8 +5,8 @@
     <description>A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!</description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 01 Aug 2014 02:42:30 -0400</pubDate>
-    <lastBuildDate>Fri, 01 Aug 2014 02:42:30 -0400</lastBuildDate>
+    <pubDate>Fri, 01 Aug 2014 03:39:18 -0400</pubDate>
+    <lastBuildDate>Fri, 01 Aug 2014 03:39:18 -0400</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -263,9 +263,9 @@ Message Matches!
         <link>http://yourdomain.com/c++/2014/07/24/huffman-encoding-implementation/</link>
         <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/24/huffman-encoding-implementation/</guid>
         
-        <category>algorithm</category>
-        
         <category>C++</category>
+        
+        <category>algorithm</category>
         
         <category>encoding</category>
         
@@ -295,15 +295,11 @@ DeadLift: 125&lt;/p&gt;
 &lt;p&gt;I’ve been feeling stronger too, so I really hope this regime is a good path for me.&lt;/p&gt;
 </description>
         <pubDate>Tue, 22 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/fitness/powerlifting/weightlifting/2014/07/22/squatting/</link>
-        <guid isPermaLink="true">http://yourdomain.com/fitness/powerlifting/weightlifting/2014/07/22/squatting/</guid>
+        <link>http://yourdomain.com/fitness/2014/07/22/squatting/</link>
+        <guid isPermaLink="true">http://yourdomain.com/fitness/2014/07/22/squatting/</guid>
         
         
         <category>fitness</category>
-        
-        <category>powerlifting</category>
-        
-        <category>weightlifting</category>
         
       </item>
     
@@ -423,13 +419,11 @@ A trie (from retrieval), is a multi-way tree structure useful for storing string
 &lt;p&gt;All in all this was a fun exercise. I think I’ll include weights to the words so that they are sorted in a smarter order than this. Still a WIP!&lt;/p&gt;
 </description>
         <pubDate>Tue, 22 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/trie/2014/07/22/autocomplete-word-predictor-simple-trie/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/trie/2014/07/22/autocomplete-word-predictor-simple-trie/</guid>
+        <link>http://yourdomain.com/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</link>
+        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</guid>
         
         
         <category>c++</category>
-        
-        <category>trie</category>
         
       </item>
     

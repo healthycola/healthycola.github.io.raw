@@ -3,7 +3,6 @@ layout: post
 title: Autocomplete / Word Predictor / Simple Trie
 categories:
 - C++
-- Trie
 tags: []
 ---
 

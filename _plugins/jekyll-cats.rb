@@ -1,4 +1,4 @@
-require 'jekyll-categories/tags'
+require_relative 'tag_gen'
 
 module Jekyll
   module Categories
@@ -119,6 +119,7 @@ module Jekyll
     end
   end
   # Adds some extra filters used during the category creation process.
+  # Taken from @stympy on Git. Thanks!
   module Filters
     
     # Outputs a list of categories as comma-separated <a> links. This is used

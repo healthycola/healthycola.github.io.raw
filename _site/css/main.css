@@ -287,9 +287,19 @@ a:visited { color: #205caa; }
 
 /* Navigation Styles */
 /* ----------------------------------------------------------*/
+ul.tagList {
+  padding-left: 10px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+
 ul.categoryList {
   padding-left: 10px;
-    list-style-type: none;
+  list-style-type: none;
   margin: 0;
   padding: 0;
   width: 100%;
