@@ -298,7 +298,7 @@ ul.categoryList {
 
 
 .categoryList li {
-  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  font: 200 15px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #ccc;
 }
  
@@ -310,6 +310,9 @@ ul.categoryList {
   text-decoration: none;
   color: #000;
   display: block;
+  padding-left: 10px;
+  height:25px;
+  line-height: 25px;
 }
  
 .categoryList li a:hover {
