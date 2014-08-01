@@ -46,7 +46,7 @@ module Jekyll
         self.data['categories'] = categories
       end
     end
-
+    
     class CategoryGenerator < Generator
       safe true
 
@@ -54,14 +54,14 @@ module Jekyll
         if site.layouts.key? 'category_index'
           dir = site.config['category_dir'] || 'categories'
           site.categories.keys.each do |category|
-            write_category_index(site, File.join(dir, category.gsub(/\s/, "-").gsub(/[^\w-+#]/, '').downcase), category)
+            write_category_index(site, File.join(dir, name_to_dir(category).downcase), category)
           end
         end
 
         if site.layouts.key? 'category_feed'
           dir = site.config['category_dir'] || 'categories'
           site.categories.keys.each do |category|
-            write_category_feed(site, File.join(dir, category.gsub(/\s/, "-").gsub(/[^\w-+#]/, '').downcase), category)
+            write_category_feed(site, File.join(dir, name_to_dir(category).downcase), category)
           end
         end
 
@@ -93,6 +93,8 @@ module Jekyll
       end
     end
 
+
+
     # Returns a correctly formatted category url based on site configuration.
     #
     # Use without arguments to return the url of the category list page.
@@ -113,7 +115,7 @@ module Jekyll
         base_url = context.registers[:site].config['base-url'] || '/'
         category_dir = context.registers[:site].config['category_dir'] || 'categories'
 
-        category = context[@category] || @category.strip.tr(' ', '-').downcase
+        category = name_to_dir(context[@category]).downcase
         category.empty? ? "#{base_url}#{category_dir}" : "#{base_url}#{category_dir}/#{category}"
       end
     end
@@ -130,7 +132,7 @@ module Jekyll
     # Returns string
     def category_links(categories)
       categories = categories.sort!.map do |item|
-        '<a href="/categories/'+item+'/">'+item+'</a>'
+        '<a href="/categories/'+name_to_dir(item)+'/">'+item+'</a>'
       end
       
       connector = "and"
@@ -152,7 +154,7 @@ module Jekyll
     #
     # Returns string
     def date_to_html_string(date)
-      result = '<span class="month">' + date.strftime('%b').upcase + '</span> '
+      result = '<span class="month">' + date.strftime('%b') + '</span> '
       result += date.strftime('<span class="day">%d</span> ')
       result += date.strftime('<span class="year">%Y</span> ')
       result

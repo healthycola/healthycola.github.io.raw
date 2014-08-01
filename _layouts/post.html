@@ -9,7 +9,7 @@ layout: default
   </header>
 
   <article class="post-content">
-  Tagged with {{ page.tags | tag_links }}.</br>
+  {{ page.tags | tag_links }}
   {{ content }}
   </article>
   {% include disquscomment.html %}

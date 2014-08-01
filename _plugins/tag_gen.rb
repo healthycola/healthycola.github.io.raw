@@ -1,3 +1,5 @@
+require_relative 'global.rb'
+
 module Jekyll
   module Categories
     class TagIndex < Page
@@ -89,6 +91,7 @@ module Jekyll
         index.write(site.dest)
         site.static_files << index
       end
+
     end
 
     # Returns a correctly formatted tag url based on site configuration.
@@ -126,19 +129,20 @@ module Jekyll
     # Returns string
     def tag_links(tags)
       tags = tags.sort!.map do |item|
-        '<a href="/tags/'+item+'/">'+item+'</a>'
+        '<a href="/tags/'+item.downcase+'/">'+item+'</a>'
       end
       
       connector = "and"
+      @LeadUp = "Tagged with:"
       case tags.length
       when 0
         ""
       when 1
-        tags[0].to_s
+        "#{@LeadUp} #{tags[0]}</br>"
       when 2
-        "#{tags[0]} #{connector} #{tags[1]}"
+        "#{@LeadUp} #{tags[0]} #{connector} #{tags[1]}</br>"
       else
-        "#{tags[0...-1].join(', ')}, #{connector} #{tags[-1]}"
+        "#{@LeadUp} #{tags[0...-1].join(', ')}, #{connector} #{tags[-1]}</br>"
       end
     end
     
@@ -155,6 +159,8 @@ module Jekyll
     end
     
   end
+
+
 end
 
 Liquid::Template.register_tag('tag_url', Jekyll::Categories::TagUrlTag)
