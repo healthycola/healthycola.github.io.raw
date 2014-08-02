@@ -12,5 +12,5 @@ layout: default
   {{ page.tags | tag_links }}
   {{ content }}
   </article>
-  {%if comments %}{% include disquscomment.html %} {% endif %}
+  {%if site.comments %}{% include disquscomment.html %} {% endif %}
 </div>

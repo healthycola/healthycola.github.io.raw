@@ -3,11 +3,12 @@ title: "Code, Bagels and Gibberish"
 email: ""
 description: "A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!"
 baseurl: ""
-url: "http://yourdomain.com"
+url: "http://healthycola.github.io"
 twitter_username: healthycola
 github_username:  healthycola
-comments: false
+comments: true
 excerpt_separator: <!--more-->
+paginate: 5
 
 # Build settings
 markdown: kramdown

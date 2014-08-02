@@ -3,10 +3,10 @@
   <channel>
     <title>Code, Bagels and Gibberish</title>
     <description>A small space for a newbie dev. Small and silly projects are always ongoing. Enjoy!</description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 01 Aug 2014 17:42:55 -0400</pubDate>
-    <lastBuildDate>Fri, 01 Aug 2014 17:42:55 -0400</lastBuildDate>
+    <link>http://healthycola.github.io/</link>
+    <atom:link href="http://healthycola.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sat, 02 Aug 2014 13:09:06 -0400</pubDate>
+    <lastBuildDate>Sat, 02 Aug 2014 13:09:06 -0400</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -27,8 +27,8 @@ To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; direc
 
 </description>
         <pubDate>Wed, 30 Jul 2014 00:07:55 -0400</pubDate>
-        <link>http://yourdomain.com/jekyll/update/2014/07/30/welcome-to-jekyll/</link>
-        <guid isPermaLink="true">http://yourdomain.com/jekyll/update/2014/07/30/welcome-to-jekyll/</guid>
+        <link>http://healthycola.github.io/jekyll/update/2014/07/30/welcome-to-jekyll/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/jekyll/update/2014/07/30/welcome-to-jekyll/</guid>
         
         
         <category>jekyll</category>
@@ -260,8 +260,8 @@ Message Matches!
 
 </description>
         <pubDate>Thu, 24 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/24/huffman-encoding-implementation/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/24/huffman-encoding-implementation/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/24/huffman-encoding-implementation/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/24/huffman-encoding-implementation/</guid>
         
         <category>C++</category>
         
@@ -295,8 +295,8 @@ DeadLift: 125&lt;/p&gt;
 &lt;p&gt;I’ve been feeling stronger too, so I really hope this regime is a good path for me.&lt;/p&gt;
 </description>
         <pubDate>Tue, 22 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/fitness/2014/07/22/squatting/</link>
-        <guid isPermaLink="true">http://yourdomain.com/fitness/2014/07/22/squatting/</guid>
+        <link>http://healthycola.github.io/fitness/2014/07/22/squatting/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/fitness/2014/07/22/squatting/</guid>
         
         <category>health</category>
         
@@ -423,8 +423,8 @@ A trie (from retrieval), is a multi-way tree structure useful for storing string
 &lt;p&gt;All in all this was a fun exercise. I think I’ll include weights to the words so that they are sorted in a smarter order than this. Still a WIP!&lt;/p&gt;
 </description>
         <pubDate>Tue, 22 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/22/autocomplete-word-predictor-simple-trie/</guid>
         
         <category>C++</category>
         
@@ -621,8 +621,8 @@ Program exited with code 0.
 &lt;/code&gt;&lt;/pre&gt;
 </description>
         <pubDate>Wed, 16 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/16/2d-matrix-rotator/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/16/2d-matrix-rotator/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/16/2d-matrix-rotator/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/16/2d-matrix-rotator/</guid>
         
         <category>C++</category>
         
@@ -985,8 +985,8 @@ Simply go through the hand and count the number of cards with the same value as 
 &lt;em&gt;Clearly this method can be improved upon….&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 14 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/14/simple-rummychecker/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/14/simple-rummychecker/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/14/simple-rummychecker/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/14/simple-rummychecker/</guid>
         
         <category>C++</category>
         
@@ -1204,8 +1204,8 @@ Simply go through the hand and count the number of cards with the same value as 
 
 </description>
         <pubDate>Sat, 12 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/12/11-simple-blackjackchecker/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/12/11-simple-blackjackchecker/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/12/11-simple-blackjackchecker/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/12/11-simple-blackjackchecker/</guid>
         
         <category>C++</category>
         
@@ -1228,8 +1228,8 @@ Simply go through the hand and count the number of cards with the same value as 
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 11 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/11/vector-vs-arrays/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/11/vector-vs-arrays/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/11/vector-vs-arrays/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/11/vector-vs-arrays/</guid>
         
         <category>C++</category>
         
@@ -1309,8 +1309,8 @@ And yourself?&lt;/code&gt;
 
 </description>
         <pubDate>Fri, 11 Jul 2014 00:00:00 -0400</pubDate>
-        <link>http://yourdomain.com/c++/2014/07/11/challenge-1-accepting-console-input/</link>
-        <guid isPermaLink="true">http://yourdomain.com/c++/2014/07/11/challenge-1-accepting-console-input/</guid>
+        <link>http://healthycola.github.io/c++/2014/07/11/challenge-1-accepting-console-input/</link>
+        <guid isPermaLink="true">http://healthycola.github.io/c++/2014/07/11/challenge-1-accepting-console-input/</guid>
         
         <category>C++</category>
         
